@@ -68,7 +68,7 @@ def fallback_article(topic: dict) -> dict:
             {"heading": "看完今天的材料后", "paragraphs": [f"今天不要求你成为“{topic['title']}”的专家。完成文字阅读，再选择一段视频和一集播客，目标只是能用自己的话说明：它是什么、从哪里来、现在有哪些主要参与者、为什么会出现在公共讨论中。"]},
         ],
         "timeline": [{"label": "起点", "text": "形成早期问题或基础条件"}, {"label": "扩展", "text": "技术、制度或社会需求推动领域扩大"}, {"label": "转折", "text": "关键事件改变参与者与发展路径"}, {"label": "今天", "text": "进入现实生活并产生新的机会与争议"}],
-        "chart": {"type": "flow", "title": "理解这个主题的四个入口", "items": ["概念：它是什么", "历史：怎么走到今天", "参与者：谁在推动", "争议：还没有共识什么"]},
+        "chart": {"type": "flow", "title": "理解这个主题的四个入口", "items": [{"label": "概念", "detail": "它是什么"}, {"label": "历史", "detail": "怎么走到今天"}, {"label": "参与者", "detail": "谁在推动"}, {"label": "争议", "detail": "还没有共识什么"}]},
     }
     # Keep the no-API path useful for a real reading session instead of a link list.
     current_chars = sum(len(p) for section in article["sections"] for p in section["paragraphs"])
@@ -84,7 +84,7 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         return None
-    prompt = f"""你是中文知识编辑。请为普通读者写一篇关于“{topic['title']}”的背景导览，不是课程，不布置作业，也不要鼓励读者投资或进行医疗/政治行动。正文必须是中文，目标 5000-8000 个汉字，可以更长。\n\n必须覆盖：它是什么、历史发展、内部结构或主要参与者、现实案例、当前讨论、争议与不同观点。‘为什么重要’只能用一小段带过。\n\n请严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（2-4段）、history（3-6段）、sections（6-8项，每项有 heading 和 paragraphs 数组）、timeline（4-8项，每项有 label 和 text）、chart（type 为 flow/timeline/compare 之一，title 和 items 数组）、disputes（可选字符串数组）。不要编造具体视频 URL；推荐材料只能使用下方已给出的 URL。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时观察到的热点：{json.dumps(hot[:10], ensure_ascii=False)}"""
+    prompt = f"""你是中文知识编辑。请为普通读者写一篇关于“{topic['title']}”的深度背景导览，不是课程，不布置任务，不安排打卡，也不要把文章写成提纲或链接清单。正文必须是自然、连贯、信息密度高的中文，目标 5000-8000 个汉字，可以更长。\n\n文章必须真正讲明白：它的准确定义和边界；它为什么会出现；历史上的关键转折及其因果关系；内部组成、产业链或制度结构；主要人物、公司、国家和机构分别扮演什么角色；至少 3 个具体案例（带时间、地点或组织）；当前发展到哪一步；未来可能怎样变化；事实、解释、观点和争议分别是什么。不要泛泛使用“影响深远”“值得关注”等空话。‘为什么重要’只能用一小段带过，不能取代正文。\n\n请严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（2-4段）；history（3-6段）；sections（8-12项，每项有 heading 和 paragraphs 数组，每项尽量 500-900 个汉字）；timeline（4-8项，每项有 label、text、detail）；chart（type 为 flow/timeline/compare 之一，title、subtitle、items 数组，items 每项是 {label, detail, relation}，图表必须表达真实的结构或因果关系，不能只放四个口号）；disputes（可选字符串数组）。不要编造具体视频 URL，不要编造播客期数；推荐材料只能使用下方已给出的 URL。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时观察到的热点：{json.dumps(hot[:10], ensure_ascii=False)}"""
     body = {"model": "deepseek-v4-flash", "messages": [{"role": "system", "content": "你是严谨、清晰、偏中文的知识编辑。"}, {"role": "user", "content": prompt}], "temperature": 0.7, "max_tokens": 16000, "response_format": {"type": "json_object"}}
     try:
         req = Request("https://api.deepseek.com/chat/completions", data=json.dumps(body).encode(), headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"}, method="POST")
@@ -100,7 +100,23 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
 
 
 def build_media(topic: dict) -> list[list[str]]:
-    return topic.get("resources", [])
+    resources = [list(item) for item in topic.get("resources", [])]
+    # Bilibili search pages are often accessible even when the result page is
+    # not. When possible, preserve the search fallback and add a concrete BV
+    # video URL found today.
+    for item in resources:
+        if item[0] not in {"Bilibili", "视频"} or "search.bilibili.com" not in item[2]:
+            continue
+        try:
+            req = Request(item[2], headers={"User-Agent": "Mozilla/5.0 DailyStudy/1.0"})
+            page = urlopen(req, timeout=10).read().decode("utf-8", errors="ignore")
+            ids = list(dict.fromkeys(re.findall(r"(?:www\.bilibili\.com/video/|b23\.tv/)(BV[a-zA-Z0-9]+)", page)))
+            if ids:
+                resources.insert(0, ["Bilibili 单集", f"B站具体视频：{ids[0]}", f"https://www.bilibili.com/video/{ids[0]}", "程序今天从对应主题的 Bilibili 结果页找到的具体单集；如果页面失效，请使用下面的搜索入口。"])
+        except Exception as exc:
+            print(f"Bilibili direct-link lookup skipped: {exc}")
+        break
+    return resources
 
 
 def main() -> None:
@@ -109,8 +125,11 @@ def main() -> None:
     history = json.loads(HISTORY.read_text(encoding="utf-8")) if HISTORY.exists() else []
     hot = fetch_titles()
     topic, reason, observed = choose_topic(topics, history, hot)
-    article = call_deepseek(topic, reason, observed) or fallback_article(topic)
-    payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek" if os.environ.get("DEEPSEEK_API_KEY") and article.get("sections") != fallback_article(topic).get("sections") else "fallback", "selection_reason": reason, "hot_observed": observed[:10], "resources": build_media(topic), **topic, **article}
+    media = build_media(topic)
+    prompt_topic = {**topic, "resources": media}
+    generated = call_deepseek(prompt_topic, reason, observed)
+    article = generated or fallback_article(topic)
+    payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek" if generated else "fallback", "selection_reason": reason, "hot_observed": observed[:10], **topic, **article, "resources": media}
     DATA.mkdir(parents=True, exist_ok=True)
     ARCHIVE.mkdir(parents=True, exist_ok=True)
     TODAY.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
