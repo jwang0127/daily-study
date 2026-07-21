@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>每日一题 · Daily Study</title>
+  <style>
+    :root{--ink:#172235;--muted:#64748b;--paper:#f6f7fb;--card:#fff;--line:#e5e7eb;--accent:#635bff;--warm:#f59e0b}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:16px/1.7 system-ui,-apple-system,"Microsoft YaHei",sans-serif}main{max-width:1080px;margin:auto;padding:40px 20px 80px}.hero{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:28px}.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.08em}.date{color:var(--muted);font-size:14px}.title{font-size:clamp(32px,6vw,64px);line-height:1.05;margin:8px 0}.subtitle{color:var(--muted);font-size:18px;margin:0}.hero-mark{font-size:72px;filter:saturate(.8)}.tag{display:inline-block;padding:4px 10px;border-radius:99px;background:#eeecff;color:#4c45c5;font-size:13px;font-weight:700}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 8px 30px #1e293b08}.card h2{margin:0 0 14px;font-size:20px}.goal{font-size:18px}.schedule{display:grid;gap:10px}.slot{display:grid;grid-template-columns:100px 76px 1fr;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.slot:last-child{border:0}.slot b{font-size:14px}.time{color:var(--warm);font-weight:700;font-size:14px}.resources{display:grid;gap:12px}.resource{padding:14px;border:1px solid var(--line);border-radius:14px}.resource a{color:var(--accent);font-weight:700;text-decoration:none}.resource small{display:block;color:var(--muted);margin-top:4px}.questions{margin:0;padding-left:22px}.footer{color:var(--muted);font-size:13px;margin-top:24px}.wide{grid-column:1/-1}@media(max-width:760px){main{padding-top:24px}.hero{align-items:flex-start}.hero-mark{font-size:46px}.grid{grid-template-columns:1fr}.wide{grid-column:auto}.slot{grid-template-columns:1fr 64px}.slot span:last-child{grid-column:1/-1}}
+  </style>
+</head>
+<body><main id="app"><p>正在加载今日学习包…</p></main>
+<script>
+fetch('data/today.json').then(r=>r.json()).then(d=>{document.title=d.title+' · 每日一题';document.getElementById('app').innerHTML=`
+<section class="hero"><div><div class="eyebrow">DAILY STUDY / ${d.date_display}</div><h1 class="title">${d.title}</h1><p class="subtitle">${d.subtitle}</p></div><div class="hero-mark">✦</div></section>
+<div class="grid"><article class="card"><span class="tag">${d.category}</span><h2>今天学完，你应该能</h2><p class="goal">${d.goal}</p><h2>2 小时路线</h2><div class="schedule">${d.schedule.map(x=>`<div class="slot"><b>${x[0]}</b><span class="time">${x[1]}</span><span>${x[2]}</span></div>`).join('')}</div></article>
+<aside class="card"><h2>学习材料</h2><div class="resources">${d.resources.map(x=>`<div class="resource"><span class="tag">${x.type}</span><br><a href="${x.url}" target="_blank" rel="noopener">${x.title} ↗</a><small>${x.note}</small></div>`).join('')}</div></aside>
+<article class="card wide"><h2>带着问题学习</h2><ol class="questions">${d.questions.map(x=>`<li>${x}</li>`).join('')}</ol><p class="footer">建议：先不追求看完所有材料。完成路线后，用自己的话写 100 字总结，并记录一个仍然不懂的问题。</p></article></div>
+<p class="footer">内容按日期从主题库轮换生成 · ${d.generated_at} · 本页面用于学习资料整理，不构成投资、医疗或其他专业建议。</p>`}).catch(()=>document.getElementById('app').innerHTML='<p>今日内容加载失败，请运行 python scripts/generate_study.py。</p>');
+</script></body></html>

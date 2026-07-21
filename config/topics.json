@@ -1,0 +1,77 @@
+[
+  {
+    "category": "人工智能",
+    "title": "大语言模型是怎样工作的？",
+    "subtitle": "从 token、注意力机制到训练与推理",
+    "goal": "能用自己的话解释一个聊天模型如何把文字变成答案，并区分训练、微调和推理。",
+    "concepts": ["Token 与词向量", "Transformer 与注意力", "预训练、微调、对齐", "幻觉与评估"],
+    "schedule": [["建立地图", "15 分钟", "先读概览，写下你认为模型最难的环节"], ["核心阅读", "35 分钟", "理解 token、注意力和训练目标"], ["视频学习", "25 分钟", "用可视化解释补齐直觉"], ["动手练习", "25 分钟", "画出一次提问从输入到输出的流程"], ["复盘输出", "15 分钟", "回答下方 3 个问题，写 100 字总结"]],
+    "questions": ["为什么模型不是在数据库里查答案？", "注意力机制解决了什么问题？", "如何判断一个回答只是听起来合理？"],
+    "resources": [
+      {"type": "文章", "title": "The Illustrated Transformer（图解 Transformer）", "url": "https://jalammar.github.io/illustrated-transformer/", "note": "直观图解，适合第一次建立整体认知"},
+      {"type": "官方课程", "title": "DeepLearning.AI · Generative AI for Everyone", "url": "https://www.deeplearning.ai/courses/generative-ai-for-everyone/", "note": "无需编程基础"},
+      {"type": "Bilibili", "title": "B站搜索：Transformer 注意力机制", "url": "https://search.bilibili.com/all?keyword=Transformer%20%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6", "note": "选择时优先看高校或技术机构账号"},
+      {"type": "播客", "title": "Lex Fridman Podcast · AI 专题搜索", "url": "https://www.youtube.com/@lexfridman/search?query=AI", "note": "可只听前 20–30 分钟，关注观点而非背结论"}
+    ]
+  },
+  {
+    "category": "经济与财经",
+    "title": "利率为什么会影响股市和房价？",
+    "subtitle": "把央行政策传导链条讲清楚",
+    "goal": "理解政策利率如何通过银行、债券、汇率和预期影响实体经济与资产价格。",
+    "concepts": ["名义利率与实际利率", "收益率曲线", "货币政策传导", "风险溢价与预期"],
+    "schedule": [["建立地图", "15 分钟", "画出利率变化到资产价格的五步链条"], ["核心阅读", "35 分钟", "读央行货币政策基础材料"], ["视频学习", "25 分钟", "找一个通俗解释并记录例子"], ["案例练习", "25 分钟", "比较加息周期中股票、债券、房价的可能反应"], ["复盘输出", "15 分钟", "回答下方 3 个问题，区分事实与判断"]],
+    "questions": ["为什么降息不一定让股市上涨？", "实际利率和通胀预期分别扮演什么角色？", "哪些数据可以验证你的判断？"],
+    "resources": [
+      {"type": "文章", "title": "IMF Finance & Development · Monetary Policy", "url": "https://www.imf.org/en/Publications/fandd", "note": "从宏观机制理解政策，而不是追逐单日行情"},
+      {"type": "数据", "title": "FRED · Federal Funds Effective Rate", "url": "https://fred.stlouisfed.org/series/FEDFUNDS", "note": "用长期数据观察利率周期"},
+      {"type": "Bilibili", "title": "B站搜索：利率 货币政策传导机制", "url": "https://search.bilibili.com/all?keyword=%E5%88%A9%E7%8E%87%20%E8%B4%A7%E5%B8%81%E6%94%BF%E7%AD%96%E4%BC%A0%E5%AF%BC%E6%9C%BA%E5%88%B6", "note": "注意视频发布日期与数据时点"},
+      {"type": "播客", "title": "Planet Money · Interest rates 搜索", "url": "https://www.npr.org/podcasts/510289/planet-money", "note": "用故事补充直觉"}
+    ]
+  },
+  {
+    "category": "历史与政治",
+    "title": "一个国家的制度是怎样形成的？",
+    "subtitle": "用历史、利益与组织解释制度变化",
+    "goal": "学会用时间线、参与者和激励结构分析制度，而不是只背事件和人物。",
+    "concepts": ["路径依赖", "国家能力", "利益集团", "制度与执行"],
+    "schedule": [["建立地图", "15 分钟", "选一个国家或制度，列出关键转折点"], ["核心阅读", "35 分钟", "读一篇大学或博物馆的背景材料"], ["视频学习", "25 分钟", "用纪录片建立时间线"], ["比较练习", "25 分钟", "比较两个国家对同一问题的不同处理"], ["复盘输出", "15 分钟", "写出一个可被证伪的解释"]],
+    "questions": ["哪些因素是长期结构，哪些只是偶然事件？", "谁从制度中受益，谁承担成本？", "你的叙述是否把复杂历史简化成单一原因？"],
+    "resources": [
+      {"type": "文章", "title": "Our World in Data · Democracy", "url": "https://ourworldindata.org/democracy", "note": "用数据和来源检验宏大叙事"},
+      {"type": "课程", "title": "Yale Open Courses · Political Science", "url": "https://oyc.yale.edu/political-science", "note": "大学公开课目录"},
+      {"type": "Bilibili", "title": "B站搜索：制度史 政治史 公开课", "url": "https://search.bilibili.com/all?keyword=%E5%88%B6%E5%BA%A6%E5%8F%B2%20%E6%94%BF%E6%B2%BB%E5%8F%B2%20%E5%85%AC%E5%BC%80%E8%AF%BE", "note": "优先选择有参考书目的视频"},
+      {"type": "播客", "title": "The Rest Is History", "url": "https://therestishistory.com/", "note": "历史叙事材料，需与学术来源交叉验证"}
+    ]
+  },
+  {
+    "category": "科技与制造",
+    "title": "PCB 从设计到量产经历了什么？",
+    "subtitle": "理解电子产品背后的板级工程",
+    "goal": "知道原理图、布局布线、打样、SMT 和测试之间的关系，能读懂一张 PCB 制造流程图。",
+    "concepts": ["原理图与 PCB Layout", "信号完整性", "Gerber 文件", "SMT、测试与良率"],
+    "schedule": [["建立地图", "15 分钟", "画出 PCB 从需求到出货的流程"], ["核心阅读", "35 分钟", "理解设计文件和制造约束"], ["视频学习", "25 分钟", "观看 PCB 工厂或工程师讲解"], ["动手练习", "25 分钟", "打开一个开源硬件项目，找出电源和接口"], ["复盘输出", "15 分钟", "回答下方 3 个问题并记录新词"]],
+    "questions": ["为什么能工作不等于能量产？", "哪些设计决定成本和良率？", "高速信号为什么需要特别的走线规则？"],
+    "resources": [
+      {"type": "文章", "title": "KiCad 官方文档", "url": "https://docs.kicad.org/", "note": "可结合开源板卡练习"},
+      {"type": "视频", "title": "B站搜索：PCB 制造流程 SMT", "url": "https://search.bilibili.com/all?keyword=PCB%20%E5%88%B6%E9%80%A0%E6%B5%81%E7%A8%8B%20SMT", "note": "适合建立工厂现场直觉"},
+      {"type": "Bilibili", "title": "B站搜索：PCB Layout 入门", "url": "https://search.bilibili.com/all?keyword=PCB%20Layout%20%E5%85%A5%E9%97%A8", "note": "选择带实际工程文件的教程"},
+      {"type": "播客", "title": "The Amp Hour · Electronics Podcast", "url": "https://theamphour.com/", "note": "电子工程访谈"}
+    ]
+  },
+  {
+    "category": "健康与科学",
+    "title": "睡眠、运动与营养：如何看健康证据？",
+    "subtitle": "从相关性、因果性到个人可执行实验",
+    "goal": "建立不被“神奇疗法”带偏的健康信息判断框架，区分观察研究、随机试验和个人体验。",
+    "concepts": ["相关不等于因果", "随机对照试验", "绝对风险与相对风险", "可重复的生活实验"],
+    "schedule": [["建立地图", "15 分钟", "列出你最近看到的一个健康结论"], ["核心阅读", "35 分钟", "学习证据等级与风险表达"], ["视频学习", "25 分钟", "找公共卫生机构的科普视频"], ["案例练习", "25 分钟", "把一个标题改写成可核查的问题"], ["复盘输出", "15 分钟", "记录结论、证据强度和下一步"]],
+    "questions": ["这个结论来自什么研究设计？", "效果有多大，而不仅是是否有效？", "哪些人群和条件不能套用？"],
+    "resources": [
+      {"type": "指南", "title": "WHO · Physical activity", "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity", "note": "公共卫生机构资料"},
+      {"type": "文章", "title": "Cochrane · Evidence", "url": "https://www.cochrane.org/evidence", "note": "系统综述与证据解读"},
+      {"type": "Bilibili", "title": "B站搜索：循证医学 健康科普", "url": "https://search.bilibili.com/all?keyword=%E5%BE%AA%E8%AF%81%E5%8C%BB%E5%AD%A6%20%E5%81%A5%E5%BA%B7%E7%A7%91%E6%99%AE", "note": "健康内容仅供学习，个体问题请咨询医生"},
+      {"type": "播客", "title": "Science Vs", "url": "https://gimletmedia.com/shows/science-vs", "note": "用证据核对流行说法"}
+    ]
+  }
+]
