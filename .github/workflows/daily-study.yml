@@ -5,6 +5,10 @@ on:
     - cron: "0 1 * * *" # 09:00 Asia/Shanghai (UTC+8)
   workflow_dispatch:
 
+concurrency:
+  group: daily-study-generation
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -12,14 +16,14 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Generate one daily topic and archive it
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: python scripts/generate_study.py
+        run: python -u scripts/generate_study.py
       - name: Commit today's page and archive
         run: |
           git config user.name "github-actions[bot]"
