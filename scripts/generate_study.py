@@ -94,7 +94,7 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
     if not key:
         print("DEEPSEEK_API_KEY is not present; using local fallback")
         return None
-    prompt = f"""你是中文知识编辑。请为普通读者写一篇关于“{topic['title']}”的深度背景导览，不是课程，不布置任务，不安排打卡，也不要把文章写成提纲或链接清单。正文必须是自然、连贯、信息密度高的中文，目标 5000-8000 个汉字，可以更长。\n\n文章必须真正讲明白：它的准确定义和边界；它为什么会出现；历史上的关键转折及其因果关系；内部组成、产业链或制度结构；主要人物、公司、国家和机构分别扮演什么角色；至少 3 个具体案例（带时间、地点或组织）；当前发展到哪一步；未来可能怎样变化；事实、解释、观点和争议分别是什么。不要泛泛使用“影响深远”“值得关注”等空话。‘为什么重要’只能用一小段带过，不能取代正文。\n\n请严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（2-4段）；history（3-6段）；sections（8-12项，每项有 heading 和 paragraphs 数组，每项尽量 500-900 个汉字）；timeline（4-8项，每项有 label、text、detail）；chart（type 为 flow/timeline/compare 之一，title、subtitle、items 数组，items 每项是 {{label, detail, relation}}，图表必须表达真实的结构或因果关系，不能只放四个口号）；disputes（可选字符串数组）。不要编造具体视频 URL，不要编造播客期数；推荐材料只能使用下方已给出的 URL。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时观察到的热点：{json.dumps(hot[:10], ensure_ascii=False)}"""
+    prompt = f"""你是中文知识编辑。请为普通读者写一篇关于“{topic['title']}”的深度背景导览，不是课程，不布置任务，不安排打卡，也不要把文章写成提纲或链接清单。正文必须是自然、连贯、信息密度高的中文，目标 5000-8000 个汉字，可以更长。\n\n文章必须真正讲明白：它的准确定义和边界；它为什么会出现；历史上的关键转折及其因果关系；内部组成、产业链或制度结构；主要人物、公司、国家和机构分别扮演什么角色；至少 3 个具体案例（带时间、地点或组织）；当前发展到哪一步；未来可能怎样变化；事实、解释、观点和争议分别是什么。不要泛泛使用“影响深远”“值得关注”等空话。‘为什么重要’只能用一小段带过，不能取代正文。正文中至少加入 2-4 个有来源依据的数据或数量级；如果提供的材料不足以核实数字，就明确写“这里不使用未经核实的数字”，不要编造统计数据。\n\n请严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（2-4段）；history（3-6段）；sections（8-12项，每项有 heading 和 paragraphs 数组，每项尽量 500-900 个汉字）；timeline（4-8项，每项有 label、text、detail）；chart（type 为 flow/timeline/compare 之一，title、subtitle、items 数组，items 每项是 {{label, detail, relation}}，图表必须表达真实的结构或因果关系，不能只放四个口号）；disputes（可选字符串数组）。不要编造具体视频 URL，不要编造播客期数；推荐材料只能使用下方已给出的 URL。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时观察到的热点：{json.dumps(hot[:10], ensure_ascii=False)}"""
     body = {"model": "deepseek-v4-flash", "messages": [{"role": "system", "content": "你是严谨、清晰、偏中文的知识编辑。"}, {"role": "user", "content": prompt}], "temperature": 0.7, "max_tokens": 16000, "response_format": {"type": "json_object"}}
     try:
         print("Calling DeepSeek API; this may take a few minutes...", flush=True)
@@ -113,6 +113,15 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
 def build_media(topic: dict) -> list[list[str]]:
     print("Looking for a concrete Bilibili link...", flush=True)
     resources = [list(item) for item in topic.get("resources", [])]
+    title = topic["title"]
+    query_items = [
+        ["中文视频搜索", f"B站搜索：{title} 深度讲解", f"https://search.bilibili.com/all?keyword={quote(title + ' 深度讲解')}", "优先筛选 20 分钟以上、大学课程、纪录片或专业机构账号。"],
+        ["中文视频搜索", f"B站搜索：{title} 历史 发展", f"https://search.bilibili.com/all?keyword={quote(title + ' 历史 发展')}", "适合补充时间线和关键转折。"],
+        ["中文播客搜索", f"小宇宙搜索：{title}", f"https://www.xiaoyuzhoufm.com/search?keyword={quote(title)}", "如果找不到具体单集，按主题和节目名称筛选 30 分钟以上内容。"],
+        ["数据入口", f"百度搜索：{title} 数据 图表", f"https://www.baidu.com/s?wd={quote(title + ' 数据 图表')}", "优先使用政府、大学、研究机构或上市公司年报数据。"],
+    ]
+    existing_urls = {item[2] for item in resources}
+    resources.extend(item for item in query_items if item[2] not in existing_urls)
     # Bilibili search pages are often accessible even when the result page is
     # not. When possible, preserve the search fallback and add a concrete BV
     # video URL found today.
