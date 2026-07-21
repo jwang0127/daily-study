@@ -17,6 +17,8 @@ jobs:
         with:
           python-version: "3.12"
       - name: Generate one daily topic and archive it
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: python scripts/generate_study.py
       - name: Commit today's page and archive
         run: |
