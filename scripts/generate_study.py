@@ -25,6 +25,12 @@ HISTORY = DATA / "history.json"
 ARCHIVE = DATA / "archive"
 HOT_SOURCES = {"百度热搜": "https://top.baidu.com/board?tab=realtime", "知乎热榜": "https://www.zhihu.com/hot", "微博热搜": "https://s.weibo.com/top/summary"}
 
+try:
+    SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
+except Exception:
+    # Windows Python installations may not include the optional tzdata package.
+    SHANGHAI_TZ = dt.timezone(dt.timedelta(hours=8), name="Asia/Shanghai")
+
 
 def fetch_titles() -> list[dict[str, str]]:
     found: list[dict[str, str]] = []
@@ -123,7 +129,7 @@ def build_media(topic: dict) -> list[list[str]]:
 
 
 def main() -> None:
-    now = dt.datetime.now(dt.timezone.utc).astimezone(ZoneInfo("Asia/Shanghai"))
+    now = dt.datetime.now(dt.timezone.utc).astimezone(SHANGHAI_TZ)
     topics = json.loads(TOPICS.read_text(encoding="utf-8"))
     history = json.loads(HISTORY.read_text(encoding="utf-8")) if HISTORY.exists() else []
     hot = fetch_titles()
