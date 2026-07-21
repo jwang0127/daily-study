@@ -14,7 +14,27 @@ python scripts/generate_study.py
 python -m http.server 8000 --directory docs
 ```
 
-脚本不需要第三方依赖，也不需要 API Key。
+脚本不需要第三方依赖，也不需要 API Key。没有 API Key 时会使用本地备用文章；配置 DeepSeek 后会生成更长的 5000–8000 字中文导览。
+
+## 可选：接入 DeepSeek
+
+在 GitHub 仓库中打开 `Settings → Secrets and variables → Actions → New repository secret`，新增：
+
+```text
+Name: DEEPSEEK_API_KEY
+Value: 你的 DeepSeek API Key
+```
+
+不要把 Key 写进代码、JSON 或提交记录。GitHub Actions 发现这个 Secret 后，会每天调用一次 `deepseek-v4-flash` 生成长文；调用失败时自动回退到本地主题库，不会让页面停止更新。
+
+本地测试时可以在 PowerShell 临时设置：
+
+```powershell
+$env:DEEPSEEK_API_KEY = "你的 API Key"
+python scripts\generate_study.py
+```
+
+测试完成后关闭当前 PowerShell 窗口即可清除临时变量。API 按输入和输出 token 计费，价格会变化，请以 DeepSeek 官方价格页为准。
 
 ## 自定义内容
 
