@@ -40,9 +40,18 @@
       ? `<section style="margin:0 0 26px;padding:20px 24px;background:linear-gradient(135deg,#eef2ff,#faf5ff);border:1px solid #dfe3ff;border-radius:18px"><h2 style="margin:0 0 5px;font-size:20px;line-height:1.4">今日音频</h2><p style="margin:0 0 12px;color:#667085;font-size:14px">文章已自动生成语音，可直接收听。</p><audio controls preload="metadata" src="${esc(audio.url)}" style="display:block;width:100%;height:42px"></audio></section>`
       : `<section style="margin:0 0 26px;padding:20px 24px;background:#fafbfe;border:1px solid #e2e6ef;border-radius:18px"><h2 style="margin:0 0 5px;font-size:20px;line-height:1.4">今日音频</h2><p style="margin:0;color:#667085;font-size:14px">今日音频暂未生成，文字内容仍可正常阅读。</p></section>`;
     const app=document.getElementById('app');
-    const observer=new MutationObserver(()=>{
-      if(app.querySelector('.layout')){app.insertAdjacentHTML('afterbegin',panel);observer.disconnect();}
-    });
-    observer.observe(app,{childList:true});
+    let observer;
+    const insertPanel=()=>{
+      if(app.querySelector('.layout')&&!app.querySelector('audio')){
+        app.insertAdjacentHTML('afterbegin',panel);
+        if(observer) observer.disconnect();
+        return true;
+      }
+      return false;
+    };
+    if(!insertPanel()){
+      observer=new MutationObserver(insertPanel);
+      observer.observe(app,{childList:true});
+    }
   });
 </script></body></html>
