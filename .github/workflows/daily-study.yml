@@ -11,6 +11,8 @@ concurrency:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   generate:
@@ -31,3 +33,11 @@ jobs:
           git add docs/data
           git diff --cached --quiet || git commit -m "chore: publish daily knowledge guide"
           git push
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload generated site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: Deploy generated site
+        uses: actions/deploy-pages@v4
