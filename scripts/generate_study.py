@@ -24,6 +24,7 @@ TODAY = DATA / "today.json"
 HISTORY = DATA / "history.json"
 ARCHIVE = DATA / "archive"
 HOT_SOURCES = {"百度热搜": "https://top.baidu.com/board?tab=realtime", "知乎热榜": "https://www.zhihu.com/hot", "微博热搜": "https://s.weibo.com/top/summary"}
+API_STATUS = "not_checked"
 
 try:
     SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
@@ -90,8 +91,10 @@ def fallback_article(topic: dict) -> dict:
 
 
 def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
+    global API_STATUS
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
+        API_STATUS = "missing_key"
         print("DEEPSEEK_API_KEY is not present; using local fallback")
         return None
     prompt = f"""你是中文知识编辑。请为普通读者写一篇关于“{topic['title']}”的深度背景导览，不是课程，不布置任务，不安排打卡，也不要把文章写成提纲或链接清单。正文必须是自然、连贯、信息密度高的中文，目标 5000-8000 个汉字，可以更长。\n\n文章必须真正讲明白：它的准确定义和边界；它为什么会出现；历史上的关键转折及其因果关系；内部组成、产业链或制度结构；主要人物、公司、国家和机构分别扮演什么角色；至少 3 个具体案例（带时间、地点或组织）；当前发展到哪一步；未来可能怎样变化；事实、解释、观点和争议分别是什么。不要泛泛使用“影响深远”“值得关注”等空话。‘为什么重要’只能用一小段带过，不能取代正文。正文中至少加入 2-4 个有来源依据的数据或数量级；如果提供的材料不足以核实数字，就明确写“这里不使用未经核实的数字”，不要编造统计数据。\n\n请严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（2-4段）；history（3-6段）；sections（8-12项，每项有 heading 和 paragraphs 数组，每项尽量 500-900 个汉字）；timeline（4-8项，每项有 label、text、detail）；chart（type 为 flow/timeline/compare 之一，title、subtitle、items 数组，items 每项是 {{label, detail, relation}}，图表必须表达真实的结构或因果关系，不能只放四个口号）；disputes（可选字符串数组）。不要编造具体视频 URL，不要编造播客期数；推荐材料只能使用下方已给出的 URL。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时观察到的热点：{json.dumps(hot[:10], ensure_ascii=False)}"""
@@ -103,9 +106,12 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
         content = result["choices"][0]["message"]["content"]
         parsed = json.loads(content)
         if parsed.get("sections") and parsed.get("overview") and parsed.get("history"):
+            API_STATUS = "success"
             print("DeepSeek article generated successfully")
             return parsed
+        API_STATUS = "invalid_json"
     except Exception as exc:
+        API_STATUS = f"failed_{type(exc).__name__}"
         print(f"DeepSeek unavailable, using fallback: {exc}")
     return None
 
@@ -150,7 +156,7 @@ def main() -> None:
     prompt_topic = {**topic, "resources": media}
     generated = call_deepseek(prompt_topic, reason, observed)
     article = generated or fallback_article(topic)
-    payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek" if generated else "fallback", "selection_reason": reason, "hot_observed": observed[:10], **topic, **article, "resources": media}
+    payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek" if generated else "fallback", "api_status": API_STATUS, "selection_reason": reason, "hot_observed": observed[:10], **topic, **article, "resources": media}
     DATA.mkdir(parents=True, exist_ok=True)
     ARCHIVE.mkdir(parents=True, exist_ok=True)
     TODAY.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
