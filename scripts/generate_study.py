@@ -177,13 +177,17 @@ def split_tts_text(text: str, limit: int = 145) -> list[str]:
 
 def generate_audio(payload: dict) -> dict:
     """Generate the day's MP3 with Tencent Cloud's basic TextToVoice API."""
-    secret_id = os.environ.get("TENCENTCLOUD_SECRET_ID")
-    secret_key = os.environ.get("TENCENTCLOUD_SECRET_KEY")
+    # Copy/paste from Tencent Cloud can leave a trailing newline or space in a
+    # GitHub secret. Strip only the outside whitespace; never alter the key.
+    secret_id = os.environ.get("TENCENTCLOUD_SECRET_ID", "").strip()
+    secret_key = os.environ.get("TENCENTCLOUD_SECRET_KEY", "").strip()
     if not secret_id and not secret_key:
         print("Tencent TTS credentials are not present; skipping audio locally")
         return {"status": "skipped", "url": "", "characters": 0, "chunks": 0}
     if not secret_id or not secret_key:
         raise RuntimeError("Both TENCENTCLOUD_SECRET_ID and TENCENTCLOUD_SECRET_KEY are required")
+    if re.search(r"\s", secret_id) or re.search(r"\s", secret_key):
+        raise RuntimeError("Tencent Cloud credentials contain internal whitespace; copy the values without spaces")
 
     try:
         from tencentcloud.common import credential
