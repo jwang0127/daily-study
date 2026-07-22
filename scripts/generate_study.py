@@ -151,11 +151,24 @@ def build_media(topic: dict) -> list[list[str]]:
 
 def narration_text(topic: dict, article: dict) -> str:
     """Build a clean reading script from the structured article payload."""
-    parts = [topic["title"], topic.get("subtitle", ""), article.get("overview", "")]
+    parts: list[str] = []
+
+    def add(value: object) -> None:
+        if isinstance(value, str):
+            if value.strip():
+                parts.append(value.strip())
+        elif isinstance(value, list):
+            for item in value:
+                add(item)
+
+    add(topic.get("title", ""))
+    add(topic.get("subtitle", ""))
+    add(article.get("overview", ""))
+    add(article.get("history", ""))
     for section in article.get("sections", []):
-        parts.append(section.get("heading", ""))
-        parts.extend(section.get("paragraphs", []))
-    return re.sub(r"\s+", " ", "。".join(part for part in parts if part).strip())
+        add(section.get("heading", ""))
+        add(section.get("paragraphs", []))
+    return re.sub(r"\s+", " ", "。".join(parts).strip())
 
 
 def split_tts_text(text: str, limit: int = 145) -> list[str]:
