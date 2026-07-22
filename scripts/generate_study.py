@@ -6,8 +6,10 @@ fallback article, so scheduled updates never depend on an API being healthy.
 from __future__ import annotations
 
 import datetime as dt
+import base64
 import hashlib
 import html
+import time
 import json
 import os
 import random
@@ -23,6 +25,7 @@ DATA = ROOT / "docs" / "data"
 TODAY = DATA / "today.json"
 HISTORY = DATA / "history.json"
 ARCHIVE = DATA / "archive"
+AUDIO = ROOT / "docs" / "audio"
 HOT_SOURCES = {"百度热搜": "https://top.baidu.com/board?tab=realtime", "知乎热榜": "https://www.zhihu.com/hot", "微博热搜": "https://s.weibo.com/top/summary"}
 API_STATUS = "not_checked"
 
@@ -146,6 +149,106 @@ def build_media(topic: dict) -> list[list[str]]:
     return resources
 
 
+def narration_text(topic: dict, article: dict) -> str:
+    """Build a clean reading script from the structured article payload."""
+    parts = [topic["title"], topic.get("subtitle", ""), article.get("overview", "")]
+    for section in article.get("sections", []):
+        parts.append(section.get("heading", ""))
+        parts.extend(section.get("paragraphs", []))
+    return re.sub(r"\s+", " ", "。".join(part for part in parts if part).strip())
+
+
+def split_tts_text(text: str, limit: int = 145) -> list[str]:
+    """Keep each basic TTS request below Tencent's 150-Chinese-character limit."""
+    chunks: list[str] = []
+    remaining = text
+    punctuation = "。！？；：，、,.!?;:"
+    while remaining:
+        if len(remaining) <= limit:
+            chunks.append(remaining)
+            break
+        cut = max(remaining.rfind(mark, 0, limit) for mark in punctuation)
+        if cut < limit // 2:
+            cut = limit - 1
+        chunks.append(remaining[: cut + 1])
+        remaining = remaining[cut + 1 :].lstrip()
+    return chunks
+
+
+def generate_audio(payload: dict) -> dict:
+    """Generate the day's MP3 with Tencent Cloud's basic TextToVoice API."""
+    secret_id = os.environ.get("TENCENTCLOUD_SECRET_ID")
+    secret_key = os.environ.get("TENCENTCLOUD_SECRET_KEY")
+    if not secret_id and not secret_key:
+        print("Tencent TTS credentials are not present; skipping audio locally")
+        return {"status": "skipped", "url": "", "characters": 0, "chunks": 0}
+    if not secret_id or not secret_key:
+        raise RuntimeError("Both TENCENTCLOUD_SECRET_ID and TENCENTCLOUD_SECRET_KEY are required")
+
+    try:
+        from tencentcloud.common import credential
+        from tencentcloud.common.profile.client_profile import ClientProfile
+        from tencentcloud.common.profile.http_profile import HttpProfile
+        from tencentcloud.tts.v20190823 import models, tts_client
+    except ImportError as exc:
+        raise RuntimeError("Tencent TTS SDK is missing; install tencentcloud-sdk-python-tts") from exc
+
+    voice_type = int(os.environ.get("TENCENT_TTS_VOICE_TYPE", "1001"))
+    speed = float(os.environ.get("TENCENT_TTS_SPEED", "0"))
+    text = narration_text(payload, payload)
+    chunks = split_tts_text(text)
+    http_profile = HttpProfile()
+    http_profile.endpoint = "tts.tencentcloudapi.com"
+    client_profile = ClientProfile()
+    client_profile.httpProfile = http_profile
+    client = tts_client.TtsClient(credential.Credential(secret_id, secret_key), "ap-beijing", client_profile)
+    audio_parts: list[bytes] = []
+
+    for index, chunk in enumerate(chunks, start=1):
+        request = models.TextToVoiceRequest()
+        request.from_json_string(json.dumps({
+            "Text": chunk,
+            "SessionId": f"daily-study-{payload['date']}-{index}",
+            "Volume": 0,
+            "Speed": speed,
+            "VoiceType": voice_type,
+            "PrimaryLanguage": 1,
+            "SampleRate": 16000,
+            "Codec": "mp3",
+        }))
+        last_error = None
+        for attempt in range(3):
+            try:
+                response = client.TextToVoice(request)
+                audio = getattr(response, "Audio", "")
+                if not audio:
+                    raise RuntimeError("Tencent TTS returned no audio data")
+                audio_parts.append(base64.b64decode(audio))
+                last_error = None
+                break
+            except Exception as exc:
+                last_error = exc
+                if attempt < 2:
+                    time.sleep(2)
+        if last_error is not None:
+            raise RuntimeError(f"Tencent TTS failed on chunk {index}/{len(chunks)}: {last_error}") from last_error
+        print(f"Generated TTS chunk {index}/{len(chunks)}", flush=True)
+
+    # Each response may contain its own ID3 header. Keep the first one and
+    # remove subsequent ID3 headers before concatenating the MP3 frame streams.
+    merged = bytearray(audio_parts[0])
+    for part in audio_parts[1:]:
+        if part.startswith(b"ID3") and len(part) >= 10:
+            tag_size = sum((part[i] & 0x7F) << (7 * (3 - i)) for i in range(6, 10))
+            part = part[10 + tag_size :]
+        merged.extend(part)
+    AUDIO.mkdir(parents=True, exist_ok=True)
+    audio_path = AUDIO / f"{payload['date']}.mp3"
+    audio_path.write_bytes(merged)
+    print(f"Generated audio {audio_path} ({len(text)} characters)", flush=True)
+    return {"status": "generated", "url": f"audio/{audio_path.name}", "characters": len(text), "chunks": len(chunks), "voice_type": voice_type}
+
+
 def main() -> None:
     now = dt.datetime.now(dt.timezone.utc).astimezone(SHANGHAI_TZ)
     topics = json.loads(TOPICS.read_text(encoding="utf-8"))
@@ -157,6 +260,7 @@ def main() -> None:
     generated = call_deepseek(prompt_topic, reason, observed)
     article = generated or fallback_article(topic)
     payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek" if generated else "fallback", "api_status": API_STATUS, "selection_reason": reason, "hot_observed": observed[:10], **topic, **article, "resources": media}
+    payload["audio"] = generate_audio(payload)
     DATA.mkdir(parents=True, exist_ok=True)
     ARCHIVE.mkdir(parents=True, exist_ok=True)
     TODAY.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

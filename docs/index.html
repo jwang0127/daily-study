@@ -30,4 +30,19 @@
     document.title=d.title+' · 每日认识一个主题';
     document.getElementById('app').innerHTML=`<nav class="nav"><span>DAILY STUDY / 每日认识一个主题</span><a href="history.html">历史主题 →</a></nav><header class="hero"><div><div class="eyebrow">${esc(d.date_display)} · ${esc(d.category)}</div><h1>${esc(d.title)}</h1><p class="subtitle">${esc(d.subtitle)}</p></div><div class="star">✦</div></header><div class="layout"><article class="article"><h2>先用几分钟知道它是什么</h2><div class="lead">${paras([d.overview])}</div><p class="reason">${esc(d.why)}</p><div class="chart"><h3>${esc(chart.title)}</h3><p>${esc(chart.subtitle||'这张图把概念、历史、参与者与争议放在同一个理解框架里。')}</p><div class="flow">${chartItems}</div></div><h2>历史发展时间线</h2><div class="timeline">${timeline}</div>${sections}<h2>视频、播客与延伸材料</h2><p>正文用于建立整体理解；下面的材料用于接触不同讲述者、案例和观点。优先选择具体单集或具体视频，只有找不到稳定单集链接时才保留搜索入口。</p><div class="resources">${resources}</div><p class="footer-note">这是知识导览，不构成投资、医疗、政治或其他专业行动建议。涉及争议时，请区分公开事实、研究结论、评论观点和推测。</p></article><aside class="side"><div class="side-card"><span class="tag">${esc(d.article_mode==='deepseek'?'DeepSeek 长文模式':'本地备用模式')}</span><p class="mode">${esc(d.article_mode==='deepseek'?'今日文章由 DeepSeek 根据主题资料整理。':'今日 API 不可用，使用本地主题资料生成。')}</p></div><div class="side-card"><h2>主题关键词</h2><ul class="points">${(d.points||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="side-card"><h2>选题线索</h2><p class="note">${esc(d.selection_reason)}</p></div></aside></div>`;
   }).catch(()=>document.getElementById('app').textContent='今日内容加载失败，请稍后刷新。');
+</script>
+<script>
+  // Keep the audio block at the very top without coupling it to the long
+  // article template above. The daily JSON is the single source of truth.
+  fetch('data/today.json').then(r=>r.json()).then(d=>{
+    const audio=d.audio||{};
+    const panel=audio.status==='generated'&&audio.url
+      ? `<section style="margin:0 0 26px;padding:20px 24px;background:linear-gradient(135deg,#eef2ff,#faf5ff);border:1px solid #dfe3ff;border-radius:18px"><h2 style="margin:0 0 5px;font-size:20px;line-height:1.4">今日音频</h2><p style="margin:0 0 12px;color:#667085;font-size:14px">文章已自动生成语音，可直接收听。</p><audio controls preload="metadata" src="${esc(audio.url)}" style="display:block;width:100%;height:42px"></audio></section>`
+      : `<section style="margin:0 0 26px;padding:20px 24px;background:#fafbfe;border:1px solid #e2e6ef;border-radius:18px"><h2 style="margin:0 0 5px;font-size:20px;line-height:1.4">今日音频</h2><p style="margin:0;color:#667085;font-size:14px">今日音频暂未生成，文字内容仍可正常阅读。</p></section>`;
+    const app=document.getElementById('app');
+    const observer=new MutationObserver(()=>{
+      if(app.querySelector('.layout')){app.insertAdjacentHTML('afterbegin',panel);observer.disconnect();}
+    });
+    observer.observe(app,{childList:true});
+  });
 </script></body></html>
