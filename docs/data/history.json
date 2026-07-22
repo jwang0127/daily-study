@@ -2,10 +2,10 @@
   {
     "date": "2026-07-22",
     "date_display": "2026年07月22日",
-    "topic_id": "ai-history",
-    "category": "科技 · AI",
-    "title": "人工智能是怎么发展到今天的？",
-    "subtitle": "从图灵测试、专家系统到大模型",
+    "topic_id": "education-ai",
+    "category": "教育 · 社会",
+    "title": "AI 会怎样改变教育？",
+    "subtitle": "从个性化学习到教师、考试与知识的变化",
     "article_mode": "deepseek"
   },
   {
