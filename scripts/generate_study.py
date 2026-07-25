@@ -56,8 +56,12 @@ def fetch_titles() -> list[dict[str, str]]:
 
 
 def choose_topic(topics: list[dict], history: list[dict], hot: list[dict]) -> tuple[dict, str, list[dict]]:
+    today = dt.date.today().isoformat()
+    scheduled = [t for t in topics if t.get("publish_date") == today]
+    if scheduled:
+        return scheduled[0], f"按主题库安排发布：{scheduled[0]['title']}", hot
     recent = {item.get("topic_id") for item in history[:7]}
-    seed = int(hashlib.sha256(dt.date.today().isoformat().encode()).hexdigest(), 16)
+    seed = int(hashlib.sha256(today.encode()).hexdigest(), 16)
     rng = random.Random(seed)
     available = [t for t in topics if t["id"] not in recent] or topics
     for candidate in hot:
