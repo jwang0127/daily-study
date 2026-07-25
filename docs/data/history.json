@@ -2,11 +2,11 @@
   {
     "date": "2026-07-25",
     "date_display": "2026年07月25日",
-    "topic_id": "spain-century",
-    "category": "历史 · 欧洲",
-    "title": "西班牙过去一百年经历了什么？",
-    "subtitle": "从内战、佛朗哥到民主化与欧洲一体化",
-    "article_mode": "fallback"
+    "topic_id": "ai-history",
+    "category": "科技 · AI",
+    "title": "人工智能是怎么发展到今天的？",
+    "subtitle": "从图灵测试、专家系统到大模型",
+    "article_mode": "deepseek"
   },
   {
     "date": "2026-07-24",
