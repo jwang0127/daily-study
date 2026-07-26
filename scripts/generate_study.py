@@ -71,6 +71,41 @@ def choose_topic(topics: list[dict], history: list[dict], hot: list[dict]) -> tu
     return rng.choice(available), "今日热点未匹配到合适的背景主题，已从广泛主题库随机选择。", hot
 
 
+def fetch_research(topic: dict) -> list[dict[str, str]]:
+    """Fetch readable source material before asking the model to write.
+
+    Search links are useful to readers but are not evidence for the article,
+    so only stable, direct HTTP sources are fetched here.
+    """
+    research: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for item in topic.get("resources", []):
+        if len(research) >= 6 or len(item) < 3:
+            break
+        url = item[2]
+        if not url.startswith(("https://", "http://")) or any(x in url for x in ("search?", "search/", "baidu.com/s?", "bilibili.com/all?")):
+            continue
+        if url in seen:
+            continue
+        seen.add(url)
+        try:
+            req = Request(url, headers={"User-Agent": "Mozilla/5.0 DailyStudyResearch/1.0"})
+            raw = urlopen(req, timeout=15).read(1_000_000).decode("utf-8", errors="ignore")
+            page_title = re.search(r"<title[^>]*>(.*?)</title>", raw, re.I | re.S)
+            text = re.sub(r"<script[\s\S]*?</script>|<style[\s\S]*?</style>|<noscript[\s\S]*?</noscript>", " ", raw, flags=re.I)
+            text = html.unescape(re.sub(r"<[^>]+>", " ", text))
+            text = re.sub(r"\s+", " ", text).strip()
+            if len(text) < 300:
+                continue
+            research.append({"title": html.unescape(page_title.group(1)).strip() if page_title else item[1], "url": url, "excerpt": text[:6000]})
+            print(f"Fetched source: {url}", flush=True)
+        except Exception as exc:
+            print(f"Source skipped: {url} · {exc}")
+    if not research:
+        raise RuntimeError(f"No readable web sources were fetched for {topic['title']}")
+    return research
+
+
 def fallback_article(topic: dict) -> dict:
     points = topic.get("points", [])
     article = {
@@ -97,14 +132,14 @@ def fallback_article(topic: dict) -> dict:
     return article
 
 
-def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
+def call_deepseek(topic: dict, reason: str, hot: list[dict], research: list[dict[str, str]]) -> dict | None:
     global API_STATUS
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         API_STATUS = "missing_key"
-        print("DEEPSEEK_API_KEY is not present; using local fallback")
+        print("DEEPSEEK_API_KEY is not present; refusing to publish a template article")
         return None
-    prompt = f"""你是中文知识编辑。请为普通读者写一篇关于“{topic['title']}”的深度背景导览，不是课程，不布置任务，不安排打卡，也不要把文章写成提纲或链接清单。正文必须是自然、连贯、信息密度高的中文，目标 5000-8000 个汉字，可以更长。\n\n文章必须真正讲明白：它的准确定义和边界；它为什么会出现；历史上的关键转折及其因果关系；内部组成、产业链或制度结构；主要人物、公司、国家和机构分别扮演什么角色；至少 3 个具体案例（带时间、地点或组织）；当前发展到哪一步；未来可能怎样变化；事实、解释、观点和争议分别是什么。不要泛泛使用“影响深远”“值得关注”等空话。‘为什么重要’只能用一小段带过，不能取代正文。正文中至少加入 2-4 个有来源依据的数据或数量级；如果提供的材料不足以核实数字，就明确写“这里不使用未经核实的数字”，不要编造统计数据。\n\n请严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（2-4段）；history（3-6段）；sections（8-12项，每项有 heading 和 paragraphs 数组，每项尽量 500-900 个汉字）；timeline（4-8项，每项有 label、text、detail）；chart（type 为 flow/timeline/compare 之一，title、subtitle、items 数组，items 每项是 {{label, detail, relation}}，图表必须表达真实的结构或因果关系，不能只放四个口号）；disputes（可选字符串数组）。不要编造具体视频 URL，不要编造播客期数；推荐材料只能使用下方已给出的 URL。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时观察到的热点：{json.dumps(hot[:10], ensure_ascii=False)}"""
+    prompt = f"""你是中文调查型编辑。请基于下方今天实际抓取的网页资料，为普通读者写一篇有判断、有证据、有具体细节的文章，主题是“{topic['title']}”。文章不是课程、提纲、读书笔记或链接清单，也不要套用固定的‘概念—历史—参与者—争议’顺序。请根据材料本身决定叙事结构：可以从一个案例、一个矛盾、一组数据或一条新闻切入，再解释背景和因果。\n\n只写资料能够支持的内容；每个关键事实后尽量标注[来源：来源标题]，数字必须能在抓取材料中找到，材料不足就明确说没有可靠数字。区分事实、作者分析和未解决问题，不要编造人物、公司、案例、网址或统计数字，不要使用‘影响深远、值得关注、赋能、全面升级’等空话。文章要回答：这件事到底发生了什么，谁在做什么，为什么这样做，实际结果或代价是什么，读者应该如何理解。正文长度以资料密度为准，宁可 1800-3500 字的扎实文章，也不要用重复段落凑长度。\n\n严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（1-3段）；sections（3-8项，每项有 heading 和 paragraphs 数组，标题和段落要根据文章内容自然生成，不要使用固定栏目名）；key_takeaways（可选，3-6条具体结论）；sources_used（实际使用的 URL 数组）。不要强行生成 history、timeline 或 chart。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时热点：{json.dumps(hot[:10], ensure_ascii=False)}\n网页抓取资料：{json.dumps(research, ensure_ascii=False)}"""
     body = {"model": "deepseek-v4-flash", "messages": [{"role": "system", "content": "你是严谨、清晰、偏中文的知识编辑。"}, {"role": "user", "content": prompt}], "temperature": 0.7, "max_tokens": 16000, "response_format": {"type": "json_object"}}
     try:
         print("Calling DeepSeek API; this may take a few minutes...", flush=True)
@@ -112,7 +147,7 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict]) -> dict | None:
         result = json.loads(urlopen(req, timeout=90).read().decode("utf-8"))
         content = result["choices"][0]["message"]["content"]
         parsed = json.loads(content)
-        if parsed.get("sections") and parsed.get("overview") and parsed.get("history"):
+        if parsed.get("sections") and parsed.get("overview"):
             API_STATUS = "success"
             print("DeepSeek article generated successfully")
             return parsed
@@ -277,10 +312,13 @@ def main() -> None:
     hot = fetch_titles()
     topic, reason, observed = choose_topic(topics, history, hot)
     media = build_media(topic)
+    research = fetch_research(topic)
     prompt_topic = {**topic, "resources": media}
-    generated = call_deepseek(prompt_topic, reason, observed)
-    article = generated or fallback_article(topic)
-    payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek" if generated else "fallback", "api_status": API_STATUS, "selection_reason": reason, "hot_observed": observed[:10], **topic, **article, "resources": media}
+    generated = call_deepseek(prompt_topic, reason, observed, research)
+    if not generated:
+        raise RuntimeError("DeepSeek article generation failed; no template fallback was published")
+    article = generated
+    payload = {"date": now.date().isoformat(), "date_display": now.strftime("%Y年%m月%d日"), "generated_at": now.isoformat(timespec="seconds"), "article_mode": "deepseek", "api_status": API_STATUS, "selection_reason": reason, "hot_observed": observed[:10], "research": research, **topic, **article, "resources": media}
     payload["audio"] = generate_audio(payload)
     DATA.mkdir(parents=True, exist_ok=True)
     ARCHIVE.mkdir(parents=True, exist_ok=True)

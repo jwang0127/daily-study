@@ -14,9 +14,9 @@ python scripts/generate_study.py
 python -m http.server 8000 --directory docs
 ```
 
-脚本不需要第三方依赖，也不需要 API Key。没有 API Key 时会使用本地备用文章；配置 DeepSeek 后会生成更长的 5000–8000 字中文导览。
+脚本会先抓取主题资料页，再让 DeepSeek 根据真实网页内容写作。DeepSeek API 是每日文章的必要条件；如果没有 API Key、网页资料不足或模型返回无效内容，任务会失败并保留上一版页面，不再发布固定模板水文。
 
-## 可选：接入 DeepSeek
+## 接入 DeepSeek
 
 在 GitHub 仓库中打开 `Settings → Secrets and variables → Actions → New repository secret`，新增：
 
@@ -25,7 +25,7 @@ Name: DEEPSEEK_API_KEY
 Value: 你的 DeepSeek API Key
 ```
 
-不要把 Key 写进代码、JSON 或提交记录。GitHub Actions 发现这个 Secret 后，会每天调用一次 `deepseek-v4-flash` 生成长文；调用失败时自动回退到本地主题库，不会让页面停止更新。
+不要把 Key 写进代码、JSON 或提交记录。GitHub Actions 发现这个 Secret 后，会每天抓取主题资料并调用一次 `deepseek-v4-flash` 生成文章。文章结构由当天资料决定，不强制套用固定栏目；调用失败时任务会失败并保留上一版页面，避免用模板内容冒充新文章。
 
 本地测试时可以在 PowerShell 临时设置：
 
