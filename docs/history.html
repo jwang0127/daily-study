@@ -1,1 +1,45 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>历史主题 · Daily Study</title><style>body{margin:0;background:#f6f7fb;color:#172235;font:16px/1.7 system-ui,-apple-system,"Microsoft YaHei",sans-serif}main{max-width:900px;margin:auto;padding:38px 20px 80px}a{color:#4f46e5;text-decoration:none;font-weight:700}.top{display:flex;justify-content:space-between;margin-bottom:35px}.intro{color:#667085}.item{display:block;background:white;border:1px solid #e6e8ee;border-radius:16px;padding:18px 20px;margin:12px 0}.date{color:#667085;font-size:13px}.cat{display:inline-block;background:#eef2ff;color:#4338ca;border-radius:99px;padding:2px 9px;font-size:12px;margin-left:8px}.item h2{margin:5px 0;font-size:20px}.item p{margin:0;color:#667085}</style></head><body><main><div class="top"><a href="index.html">← 今日主题</a><span>DAILY STUDY</span></div><h1>历史主题</h1><p class="intro">这里保留每天认识过的主题。每天只生成一个新主题，方便慢慢积累一张自己的知识地图。</p><section id="list">加载中…</section></main><script>fetch('data/history.json').then(r=>r.json()).then(xs=>{document.getElementById('list').innerHTML=xs.map(x=>`<a class="item" href="data/archive/${x.date}.json" target="_blank"><span class="date">${x.date_display}</span><span class="cat">${x.category}</span><h2>${x.title}</h2><p>${x.subtitle}</p></a>`).join('')}).catch(()=>document.getElementById('list').textContent='历史记录暂时无法加载。');</script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="每日认识一个主题的历史归档：每天一篇基于真实资料的中文知识长文。">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1320" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f46e5'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='%23e5a928'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
+  <link rel="alternate" type="application/atom+xml" title="每日认识一个主题" href="feed.xml">
+  <title>历史主题 · Daily Study</title>
+  <style>
+    :root{--ink:#172235;--muted:#667085;--paper:#f6f7fb;--card:#fff;--line:#e6e8ee;--accent:#4f46e5;--soft:#eef2ff;--tag-ink:#4338ca}
+    @media(prefers-color-scheme:dark){:root{--ink:#e7eaf3;--muted:#9aa4ba;--paper:#0e1320;--card:#171d2e;--line:#28304a;--accent:#8f97ff;--soft:#242b52;--tag-ink:#bcc3ff}}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Microsoft YaHei",sans-serif}
+    main{max-width:900px;margin:auto;padding:38px 20px 80px}
+    a{color:var(--accent);text-decoration:none;font-weight:700}
+    .top{display:flex;justify-content:space-between;margin-bottom:35px}
+    .intro{color:var(--muted)}
+    .item{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:12px 0}
+    .item:hover{border-color:var(--accent)}
+    .date{color:var(--muted);font-size:13px}
+    .cat{display:inline-block;background:var(--soft);color:var(--tag-ink);border-radius:99px;padding:2px 9px;font-size:12px;margin-left:8px}
+    .item h2{margin:5px 0;font-size:20px}
+    .item p{margin:0;color:var(--muted);font-weight:400}
+    .feed{margin-top:30px;font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body><main>
+  <div class="top"><a href="index.html">← 今日主题</a><span style="color:var(--muted);font-weight:400">DAILY STUDY</span></div>
+  <h1>历史主题</h1>
+  <p class="intro" id="intro">这里保留每天认识过的主题。每天只生成一个新主题，方便慢慢积累一张自己的知识地图。</p>
+  <section id="list">加载中…</section>
+  <p class="feed">可以用 RSS 阅读器订阅 <a href="feed.xml">feed.xml</a>，每天自动收到新主题。</p>
+</main>
+<noscript><p style="max-width:900px;margin:0 auto;padding:0 20px">本页面需要启用 JavaScript 才能加载历史记录。</p></noscript>
+<script>
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  fetch('data/history.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(xs=>{
+    if(!Array.isArray(xs)||!xs.length){document.getElementById('list').textContent='还没有历史记录。';return}
+    document.getElementById('intro').textContent=`已积累 ${xs.length} 天。每天只生成一个新主题，方便慢慢积累一张自己的知识地图。`;
+    document.getElementById('list').innerHTML=xs.map((x,i)=>`<a class="item" href="${i===0?'index.html':`index.html?date=${esc(x.date)}`}"><span class="date">${esc(x.date_display||x.date)}</span><span class="cat">${esc(x.category)}</span><h2>${esc(x.title)}</h2><p>${esc(x.subtitle)}</p></a>`).join('');
+  }).catch(()=>document.getElementById('list').textContent='历史记录暂时无法加载。');
+</script></body></html>

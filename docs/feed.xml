@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>每日认识一个主题</title>
+<link href="https://jwang0127.github.io/daily-study/"/>
+<link rel="self" href="https://jwang0127.github.io/daily-study/feed.xml"/>
+<id>https://jwang0127.github.io/daily-study/</id>
+<updated>2026-07-26T18:37:48+08:00</updated>
+<author><name>Daily Study</name></author>
+<entry><title>国内外手机游戏如何做品宣？</title><link href="https://jwang0127.github.io/daily-study/index.html?date=2026-07-26"/><id>https://jwang0127.github.io/daily-study/index.html?date=2026-07-26</id><updated>2026-07-26T00:00:00+08:00</updated><summary>从品牌定位、创意素材到社区与全球化传播</summary><category term="商业 · 游戏"/></entry>
+<entry><title>西班牙过去一百年经历了什么？</title><link href="https://jwang0127.github.io/daily-study/index.html?date=2026-07-25"/><id>https://jwang0127.github.io/daily-study/index.html?date=2026-07-25</id><updated>2026-07-25T00:00:00+08:00</updated><summary>从内战、佛朗哥到民主化与欧洲一体化</summary><category term="历史 · 欧洲"/></entry>
+<entry><title>利率到底是什么？它为什么影响所有人？</title><link href="https://jwang0127.github.io/daily-study/index.html?date=2026-07-24"/><id>https://jwang0127.github.io/daily-study/index.html?date=2026-07-24</id><updated>2026-07-24T00:00:00+08:00</updated><summary>从央行政策到房贷、企业和资产价格</summary><category term="经济 · 金融"/></entry>
+<entry><title>PCB 行业到底是做什么的？</title><link href="https://jwang0127.github.io/daily-study/index.html?date=2026-07-23"/><id>https://jwang0127.github.io/daily-study/index.html?date=2026-07-23</id><updated>2026-07-23T00:00:00+08:00</updated><summary>电子产品里那块绿色或黑色的板子</summary><category term="产业 · 制造"/></entry>
+<entry><title>AI 会怎样改变教育？</title><link href="https://jwang0127.github.io/daily-study/index.html?date=2026-07-22"/><id>https://jwang0127.github.io/daily-study/index.html?date=2026-07-22</id><updated>2026-07-22T00:00:00+08:00</updated><summary>从个性化学习到教师、考试与知识的变化</summary><category term="教育 · 社会"/></entry>
+<entry><title>储能行业到底在解决什么问题？</title><link href="https://jwang0127.github.io/daily-study/index.html?date=2026-07-21"/><id>https://jwang0127.github.io/daily-study/index.html?date=2026-07-21</id><updated>2026-07-21T00:00:00+08:00</updated><summary>电池、抽水蓄能与电网之间的关系</summary><category term="产业 · 能源"/></entry>
+</feed>
