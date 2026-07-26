@@ -21,7 +21,8 @@
 <script>
   const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   const paras=xs=>(xs||[]).map(p=>`<p>${esc(p)}</p>`).join('');
-  fetch('data/today.json').then(r=>r.json()).then(d=>{
+  const todayUrl='data/today.json?v='+Date.now();
+  fetch(todayUrl,{cache:'no-store'}).then(r=>r.json()).then(d=>{
     const sections=(d.sections||[]).map(s=>`<section><h2>${esc(s.heading)}</h2>${paras(s.paragraphs)}</section>`).join('');
     const timeline=(d.timeline||[]).map(x=>`<div><b>${esc(x.label)}</b><span>${esc(x.text)}${x.detail?`<small>${esc(x.detail)}</small>`:''}</span></div>`).join('');
     const chart=d.chart||{title:'理解路径',subtitle:'',items:[]};
@@ -34,7 +35,7 @@
 <script>
   // Keep the audio block at the very top without coupling it to the long
   // article template above. The daily JSON is the single source of truth.
-  fetch('data/today.json').then(r=>r.json()).then(d=>{
+  fetch(todayUrl,{cache:'no-store'}).then(r=>r.json()).then(d=>{
     const audio=d.audio||{};
     const panel=audio.status==='generated'&&audio.url
       ? `<section style="margin:0 0 26px;padding:20px 24px;background:linear-gradient(135deg,#eef2ff,#faf5ff);border:1px solid #dfe3ff;border-radius:18px"><h2 style="margin:0 0 5px;font-size:20px;line-height:1.4">今日音频</h2><p style="margin:0 0 12px;color:#667085;font-size:14px">文章已自动生成语音，可直接收听。</p><audio controls preload="metadata" src="${esc(audio.url)}" style="display:block;width:100%;height:42px"></audio></section>`
