@@ -21,7 +21,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 10 # regenerate from the current topic lock before deployment
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
