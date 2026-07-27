@@ -1,6 +1,11 @@
 name: Generate daily knowledge guide
 
 on:
+  push:
+    paths:
+      - "config/topics.json"
+      - "scripts/generate_study.py"
+      - ".github/workflows/daily-study.yml"
   schedule:
     - cron: "0 1 * * *" # 09:00 Asia/Shanghai (UTC+8)
   workflow_dispatch:
