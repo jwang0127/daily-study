@@ -47,7 +47,7 @@
   const audioBlock=d=>{
     const a=d.audio||{};
     if(a.status==='generated'&&a.url)
-      return `<section class="audio"><h2>${dayWord}音频</h2><p>文章已自动生成语音，可直接收听。</p><audio controls preload="metadata" src="${esc(a.url)}"></audio></section>`;
+      return `<section class="audio"><h2>${dayWord}音频</h2><p>文章已自动生成语音，可直接收听。</p><audio controls preload="metadata" src="${esc(a.url+'?v='+(d.generated_at||d.date))}"></audio></section>`;
     return `<section class="audio missing"><h2>${dayWord}音频</h2><p>${dayWord}音频暂未生成，文字内容仍可正常阅读。</p></section>`;
   };
 

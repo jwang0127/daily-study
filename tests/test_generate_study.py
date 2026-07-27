@@ -73,6 +73,12 @@ class ChooseTopicTest(unittest.TestCase):
         second = gs.choose_topic(self.TOPICS[:2], [], [], today=dt.date(2026, 7, 1))
         self.assertEqual(first[0]["id"], second[0]["id"])
 
+    def test_same_day_rerun_keeps_published_topic(self):
+        history = [{"date": "2026-07-01", "topic_id": "a"}]
+        topic, reason, _ = gs.choose_topic(self.TOPICS[:2], history, [], today=dt.date(2026, 7, 1))
+        self.assertEqual(topic["id"], "a")
+        self.assertIn("保持当日已发布主题", reason)
+
 
 class MergeMp3ChunksTest(unittest.TestCase):
     @staticmethod

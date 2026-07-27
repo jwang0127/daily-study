@@ -99,6 +99,13 @@ def choose_topic(topics: list[dict], history: list[dict], hot: list[dict], today
     scheduled = [t for t in topics if t.get("publish_date") == day]
     if scheduled:
         return scheduled[0], f"按主题库安排发布：{scheduled[0]['title']}", hot
+    # A rerun on the same day must not replace an already published article
+    # with a different random topic (for example after a workflow retry).
+    published_today = next((item for item in history if item.get("date") == day), None)
+    if published_today:
+        existing = next((t for t in topics if t.get("id") == published_today.get("topic_id")), None)
+        if existing:
+            return existing, f"保持当日已发布主题：{existing['title']}", hot
     recent = {item.get("topic_id") for item in history[:7]}
     seed = int(hashlib.sha256(day.encode()).hexdigest(), 16)
     rng = random.Random(seed)
@@ -166,7 +173,7 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict], research: list[dict
         API_STATUS = "missing_key"
         print("DEEPSEEK_API_KEY is not present; refusing to publish a template article")
         return None
-    prompt = f"""你是中文调查型编辑。请基于下方今天实际抓取的网页资料，为普通读者写一篇有判断、有证据、有具体细节的文章，主题是“{topic['title']}”。文章不是课程、提纲、读书笔记或链接清单，也不要套用固定的‘概念—历史—参与者—争议’顺序。请根据材料本身决定叙事结构：可以从一个案例、一个矛盾、一组数据或一条新闻切入，再解释背景和因果。\n\n只写资料能够支持的内容；每个关键事实后尽量标注[来源：来源标题]，数字必须能在抓取材料中找到，材料不足就明确说没有可靠数字。若主题涉及宣传或营销费用，必须拆解预算科目与计费口径（如创意制作、媒介采买、达人/赛事、联名、渠道和效果指标），明确区分公开披露、行业报告、媒体估算与无法确认的单款数字，绝不补写看似精确但没有来源的金额。区分事实、作者分析和未解决问题，不要编造人物、公司、案例、网址或统计数字，不要使用‘影响深远、值得关注、赋能、全面升级’等空话。文章要回答：这件事到底发生了什么，谁在做什么，为什么这样做，实际结果或代价是什么，读者应该如何理解。正文长度以资料密度为准，宁可 1800-3500 字的扎实文章，也不要用重复段落凑长度。\n\n严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（1-3段）；sections（3-8项，每项有 heading 和 paragraphs 数组，标题和段落要根据文章内容自然生成，不要使用固定栏目名）；key_takeaways（可选，3-6条具体结论）；sources_used（实际使用的 URL 数组）。不要强行生成 history、timeline 或 chart。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时热点：{json.dumps(hot[:10], ensure_ascii=False)}\n网页抓取资料：{json.dumps(research, ensure_ascii=False)}"""
+    prompt = f"""你是中文调查型编辑。请基于下方今天实际抓取的网页资料，为普通读者写一篇有判断、有证据、有具体细节的文章，主题是“{topic['title']}”。文章不是课程、提纲、读书笔记或链接清单，也不要套用固定的‘概念—历史—参与者—争议’顺序。请根据材料本身决定叙事结构：可以从一个案例、一个矛盾、一组数据或一条新闻切入，再解释背景和因果。\n\n只写资料能够支持的内容；每个关键事实后尽量标注[来源：来源标题]，数字必须能在抓取材料中找到，材料不足就明确说没有可靠数字。若主题涉及宣传或营销费用，必须拆解预算科目与计费口径（如创意制作、媒介采买、达人/赛事、联名、渠道和效果指标），明确区分公开披露、行业报告、媒体估算与无法确认的单款数字，绝不补写看似精确但没有来源的金额。区分事实、作者分析和未解决问题，不要编造人物、公司、案例、网址或统计数字，不要使用‘影响深远、值得关注、赋能、全面升级’等空话。文章要回答：这件事到底发生了什么，谁在做什么，为什么这样做，实际结果或代价是什么，读者应该如何理解。正文目标为 5000-8000 字，但只能用资料支持的事实、案例、比较、因果和费用口径来达到；不要为了凑字数重复观点。结构、章节数量和叙事顺序由证据决定，不套固定模型或固定栏目。每一段都应推进论证，资料不足就明确说明，不要用空泛形容词、口号或水词填充。\n\n严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（1-3段）；sections（若干项，每项有 heading 和 paragraphs 数组，标题和段落要根据文章内容自然生成，不要使用固定栏目名）；key_takeaways（可选，3-6条具体结论）；sources_used（实际使用的 URL 数组）。不要强行生成 history、timeline 或 chart。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时热点：{json.dumps(hot[:10], ensure_ascii=False)}\n网页抓取资料：{json.dumps(research, ensure_ascii=False)}"""
     body = {"model": "deepseek-v4-flash", "messages": [{"role": "system", "content": "你是严谨、清晰、偏中文的知识编辑。"}, {"role": "user", "content": prompt}], "temperature": 0.7, "max_tokens": 16000, "response_format": {"type": "json_object"}}
     for attempt in range(3):
         try:
