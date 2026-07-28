@@ -166,6 +166,14 @@ def strip_code_fences(content: str) -> str:
     return match.group(1) if match else content
 
 
+def article_character_count(article: dict) -> int:
+    overview = article.get("overview", [])
+    if isinstance(overview, str):
+        overview = [overview]
+    paragraphs = [p for section in article.get("sections", []) for p in section.get("paragraphs", [])]
+    return len("".join(str(x) for x in [*overview, *paragraphs] if x))
+
+
 def call_deepseek(topic: dict, reason: str, hot: list[dict], research: list[dict[str, str]]) -> dict | None:
     global API_STATUS
     key = os.environ.get("DEEPSEEK_API_KEY")
@@ -174,7 +182,7 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict], research: list[dict
         print("DEEPSEEK_API_KEY is not present; refusing to publish a template article")
         return None
     prompt = f"""你是中文调查型编辑。请基于下方今天实际抓取的网页资料，为普通读者写一篇有判断、有证据、有具体细节的文章，主题是“{topic['title']}”。文章不是课程、提纲、读书笔记或链接清单，也不要套用固定的‘概念—历史—参与者—争议’顺序。请根据材料本身决定叙事结构：可以从一个案例、一个矛盾、一组数据或一条新闻切入，再解释背景和因果。\n\n只写资料能够支持的内容；每个关键事实后尽量标注[来源：来源标题]，数字必须能在抓取材料中找到，材料不足就明确说没有可靠数字。若主题涉及宣传或营销费用，必须拆解预算科目与计费口径（如创意制作、媒介采买、达人/赛事、联名、渠道和效果指标），明确区分公开披露、行业报告、媒体估算与无法确认的单款数字，绝不补写看似精确但没有来源的金额。区分事实、作者分析和未解决问题，不要编造人物、公司、案例、网址或统计数字，不要使用‘影响深远、值得关注、赋能、全面升级’等空话。文章要回答：这件事到底发生了什么，谁在做什么，为什么这样做，实际结果或代价是什么，读者应该如何理解。正文目标为 5000-8000 字，但只能用资料支持的事实、案例、比较、因果和费用口径来达到；不要为了凑字数重复观点。结构、章节数量和叙事顺序由证据决定，不套固定模型或固定栏目。每一段都应推进论证，资料不足就明确说明，不要用空泛形容词、口号或水词填充。\n\n严格返回 JSON，不要 Markdown 代码围栏，字段为：overview（1-3段）；sections（若干项，每项有 heading 和 paragraphs 数组，标题和段落要根据文章内容自然生成，不要使用固定栏目名）；key_takeaways（可选，3-6条具体结论）；sources_used（实际使用的 URL 数组）。不要强行生成 history、timeline 或 chart。\n\n主题资料：{json.dumps(topic, ensure_ascii=False)}\n选题线索：{reason}\n实时热点：{json.dumps(hot[:10], ensure_ascii=False)}\n网页抓取资料：{json.dumps(research, ensure_ascii=False)}"""
-    body = {"model": "deepseek-v4-flash", "messages": [{"role": "system", "content": "你是严谨、清晰、偏中文的知识编辑。"}, {"role": "user", "content": prompt}], "temperature": 0.7, "max_tokens": 16000, "response_format": {"type": "json_object"}}
+    body = {"model": "deepseek-v4-flash", "messages": [{"role": "system", "content": "你是严谨、清晰、偏中文的知识编辑。"}, {"role": "user", "content": prompt}], "temperature": 0.7, "max_tokens": 24000, "response_format": {"type": "json_object"}}
     for attempt in range(3):
         try:
             print(f"Calling DeepSeek API (attempt {attempt + 1}/3); this may take a few minutes...", flush=True)
@@ -182,10 +190,16 @@ def call_deepseek(topic: dict, reason: str, hot: list[dict], research: list[dict
             result = json.loads(urlopen(req, timeout=240).read().decode("utf-8"))
             content = strip_code_fences(result["choices"][0]["message"]["content"])
             parsed = json.loads(content)
-            if parsed.get("sections") and parsed.get("overview"):
+            article_chars = article_character_count(parsed)
+            if parsed.get("sections") and parsed.get("overview") and article_chars >= 5000:
                 API_STATUS = "success"
-                print("DeepSeek article generated successfully")
+                print(f"DeepSeek article generated successfully ({article_chars} chars)")
                 return parsed
+            if article_chars < 5000:
+                API_STATUS = "too_short"
+                body["messages"][1]["content"] = prompt + f"\n\n上一版正文只有 {article_chars} 字，未达到 5000 字下限。请重新写一篇完整文章：补充有来源的案例、数据、比较和因果分析，但不要重复、不要堆砌形容词，也不要改变 JSON 格式。"
+                print(f"DeepSeek returned a short article ({article_chars} chars); retrying with expansion request")
+                continue
             API_STATUS = "invalid_json"
             print("DeepSeek returned JSON without the required fields")
         except Exception as exc:

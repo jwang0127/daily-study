@@ -45,6 +45,12 @@ class NarrationTextTest(unittest.TestCase):
         self.assertEqual(text, "题。段一。段二")
 
 
+class ArticleCharacterCountTest(unittest.TestCase):
+    def test_counts_overview_and_section_paragraphs(self):
+        article = {"overview": ["概览"], "sections": [{"paragraphs": ["第一段", "第二段"]}]}
+        self.assertEqual(gs.article_character_count(article), 8)
+
+
 class ChooseTopicTest(unittest.TestCase):
     TOPICS = [
         {"id": "a", "title": "主题A", "hot_terms": ["芯片"]},
