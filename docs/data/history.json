@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-08-15",
+    "date_display": "2026年08月15日",
+    "topic_id": "energy-storage",
+    "category": "产业 · 能源",
+    "title": "储能行业到底在解决什么问题？",
+    "subtitle": "电池、抽水蓄能与电网之间的关系",
+    "article_mode": "deepseek"
+  },
+  {
     "date": "2026-08-12",
     "date_display": "2026年08月12日",
     "topic_id": "urbanization",
