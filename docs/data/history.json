@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-08-31",
+    "date_display": "2026年08月31日",
+    "topic_id": "public-health",
+    "category": "科学 · 健康",
+    "title": "现代公共卫生是怎样运作的？",
+    "subtitle": "从传染病、疫苗到健康政策",
+    "article_mode": "deepseek"
+  },
+  {
     "date": "2026-08-30",
     "date_display": "2026年08月30日",
     "topic_id": "spain-century",
