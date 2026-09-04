@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-09-04",
+    "date_display": "2026年09月04日",
+    "topic_id": "interest-rates",
+    "category": "经济 · 金融",
+    "title": "利率到底是什么？它为什么影响所有人？",
+    "subtitle": "从央行政策到房贷、企业和资产价格",
+    "article_mode": "deepseek"
+  },
+  {
     "date": "2026-09-03",
     "date_display": "2026年09月03日",
     "topic_id": "ai-history",
