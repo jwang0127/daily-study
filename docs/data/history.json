@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-09-13",
+    "date_display": "2026年09月13日",
+    "topic_id": "education-ai",
+    "category": "教育 · 社会",
+    "title": "AI 会怎样改变教育？",
+    "subtitle": "从个性化学习到教师、考试与知识的变化",
+    "article_mode": "deepseek"
+  },
+  {
     "date": "2026-09-12",
     "date_display": "2026年09月12日",
     "topic_id": "ai-history",
