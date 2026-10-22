@@ -1,10 +1,10 @@
 {
-  "date": "2026-10-21",
-  "date_display": "2026年10月21日",
-  "generated_at": "2026-10-21T13:53:06+08:00",
+  "date": "2026-10-22",
+  "date_display": "2026年10月22日",
+  "generated_at": "2026-10-22T13:56:40+08:00",
   "article_mode": "deepseek",
   "api_status": "success",
-  "selection_reason": "来自百度热搜的相关热搜：“中国AI禁令”拟出台",
+  "selection_reason": "今日热点未匹配到合适的背景主题，已从广泛主题库随机选择。",
   "hot_observed": [
     {
       "source": "百度热搜",
@@ -49,153 +49,194 @@
   ],
   "research": [
     {
-      "title": "The Illustrated Transformer – Jay Alammar – Visualizing machine learning one concept at a time.",
-      "url": "https://jalammar.github.io/illustrated-transformer/",
+      "title": "Sensor Tower - Blog",
+      "url": "https://sensortower.com/blog",
+      "excerpt_chars": 4259
+    },
+    {
+      "title": "Get started with app install ads - Google Ads Help",
+      "url": "https://support.google.com/google-ads/topic/10011588",
+      "excerpt_chars": 6000
+    },
+    {
+      "title": "Facebook",
+      "url": "https://www.facebook.com/business/industries/gaming",
+      "excerpt_chars": 510
+    },
+    {
+      "title": "Marketing For Gaming | TikTok For Business",
+      "url": "https://www.tiktok.com/business/en/industries/gaming",
       "excerpt_chars": 6000
     }
   ],
-  "id": "ai-history",
-  "category": "科技 · AI",
-  "title": "人工智能是怎么发展到今天的？",
-  "subtitle": "从图灵测试、专家系统到大模型",
-  "overview": "2017年的一篇论文提出了Transformer，它最实际的好处不是让机器更像人，而是让模型训练得更快——更准确地说，是让计算可以并行。七年后的2025年，这篇论文的图解作者Jay Alammar在原文更新中写道，Transformer本身已经演化出Multi-Query Attention和RoPE位置嵌入等新组件。这个细节比任何“AI大事记”都更能说明人工智能是怎么走到今天的：它不是一条从图灵测试直通聊天机器人的直线，而是一连串工程约束、硬件适配和知识传播共同作用的结果。\n\n但必须先说清楚本文的证据边界。本次抓取的网页资料只有Alammar的《The Illustrated Transformer》一篇长文，它详细解释了Transformer的内部构造、并行化优势、实现生态和教学传播，但没有提供图灵测试、专家系统、GPU、生成式AI产品化等环节的可核验细节。主题资料中的历史概述提到了这些阶段，但本次抓取没有对应的网页来源。因此，本文不写一部完整的AI通史，而是以Transformer这个有网页证据的节点为切口，回答“AI发展到今天”的一个具体侧面：一个模型架构如何从论文变成云服务参考标准，再变成课程和书，并在七年里被持续修改。\n\n读者会看到三类内容：文章里可核验的事实（如六层堆叠、512维向量、TPU参考模型）、作者基于这些事实的分析（如并行化为什么重要），以及本次资料无法回答的问题（如专家系统的市场规模、生成式AI的用户数、中国AI禁令的具体内容）。把这三类内容分开，比给出一张看似完整的时间线更有判断价值。",
-  "history": "20 世纪中叶，图灵等人提出了机器智能的早期问题；随后专家系统兴起又受限于规则维护，机器学习让系统从数据中寻找模式，深度学习和 GPU 进一步推动了视觉与语音应用。2017 年 Transformer 改变了语言模型的路线，近年的生成式 AI 则把大规模预训练、强化学习和产品化带入大众视野。",
-  "why": "近期 AI 持续影响工作、教育、软件和产业投资。",
+  "id": "mobile-game-branding",
+  "publish_date": "2026-07-26",
+  "category": "商业 · 游戏",
+  "title": "国内外手机游戏如何做品宣？",
+  "subtitle": "从品牌定位、创意素材到社区与全球化传播",
+  "overview": "先看两组放在一起会有点刺眼的信息。Sensor Tower 在 2026 年 10 月的博客摘要里说，游戏广告变得更忙，但真正值得拆的是“移动广告创意测试增长到三倍”，以及顶级跨平台系列“把移动和主机当作完全独立的 campaign”[来源：Sensor Tower - Blog，State of Game Advertising 2026 摘要]。另一边，TikTok for Business 的游戏页面给出四个案例，数字都很漂亮：Ubisoft HOMA 的《Clean It!》拿到 250 万安装、CPI 低 55%、CVR 高 60%；Game District 的《My Supermarket Simulator》在 Android 登顶、CVR 10.84%、D7 ROAS 高 30%[来源：Marketing For Gaming | TikTok For Business]。把这两组信息放在一起，能得出一个比“买量还是做品牌”更有用的判断：今天的手游品宣，越来越像一条“创意供给—素材测试—投放优化—运营动作”的流水线，而不是先拍一支品牌大片再交给媒介去铺。\n\n但必须先说清楚本文的资料边界。本次实际抓取到的正文只有三处：Sensor Tower 博客的栏目页和若干文章摘要、TikTok for Business 的游戏行业页、Google Ads 帮助中心的 App campaign 目录页。Meta 的游戏行业页只返回登录界面，腾讯广告游戏行业、B站搜索、中国音像与数字出版协会的游戏产业报告入口都只有链接、没有抓到正文。因此，本文能回答的是“可验证的机制、案例和计费口径”，不能回答“国内某款游戏品宣花了多少钱”“国内短视频买量和直播具体怎么做”。凡是资料没有的数字，下文不会补。",
+  "history": "手机游戏传播经历了应用商店推荐、门户和论坛宣传，发展到移动广告、短视频、直播、KOL/KOC、电竞赛事和跨界联名。随着买量成本上升、隐私规则变化和全球发行成熟，品牌建设、素材测试、社区口碑与本地化逐渐从一次性推广变成贯穿研发、发行和长线运营的系统工作。",
+  "why": "国内外手游竞争激烈，理解品宣方法有助于看懂游戏发布、联名、直播和全球发行案例。",
   "points": [
-    "AI 与机器学习的区别",
-    "数据、算法、算力三者如何配合",
-    "生成式 AI 和传统软件的差别",
-    "幻觉、版权、就业与治理"
+    "产品定位与玩家分层",
+    "广告素材、试玩和叙事钩子",
+    "国内短视频买量与社区运营",
+    "海外本地化、创作者和应用商店传播",
+    "品牌声量与留存、付费之间如何连接"
   ],
   "hot_terms": [
-    "人工智能",
-    "AI",
-    "大模型",
-    "机器人",
-    "芯片"
+    "手机游戏",
+    "手游",
+    "游戏营销",
+    "游戏发行",
+    "游戏广告",
+    "全球发行"
   ],
   "resources": [
     [
-      "Bilibili 单集",
-      "B站具体视频：BV15q421A7tB",
-      "https://www.bilibili.com/video/BV15q421A7tB",
-      "程序今天从对应主题的 Bilibili 结果页找到的具体单集；如果页面失效，请使用下面的搜索入口。"
+      "行业报告",
+      "中国音像与数字出版协会 · 游戏产业报告",
+      "https://www.gamemarketing.cn/",
+      "中文游戏产业资料入口"
     ],
     [
-      "文章",
-      "图解 Transformer",
-      "https://jalammar.github.io/illustrated-transformer/",
-      "用图建立直觉"
+      "数据报告",
+      "Sensor Tower · Mobile Gaming Insights",
+      "https://sensortower.com/blog",
+      "海外手游市场与发行观察"
     ],
     [
-      "课程",
-      "DeepLearning.AI · Generative AI for Everyone",
-      "https://www.deeplearning.ai/courses/generative-ai-for-everyone/",
-      "适合非技术背景"
+      "平台资料",
+      "Google Ads · App campaigns for apps",
+      "https://support.google.com/google-ads/topic/10011588",
+      "海外应用推广机制"
     ],
     [
-      "Bilibili",
-      "B站搜索：人工智能发展史",
-      "https://search.bilibili.com/all?keyword=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%8F%91%E5%B1%95%E5%8F%B2",
-      "中文视频入口"
+      "平台资料",
+      "Meta for Business · Gaming",
+      "https://www.facebook.com/business/industries/gaming",
+      "海外社交广告与游戏案例"
     ],
     [
-      "播客",
-      "Lex Fridman Podcast · AI",
-      "https://www.youtube.com/@lexfridman/search?query=AI",
-      "英文访谈"
+      "案例入口",
+      "腾讯广告 · 游戏行业",
+      "https://e.qq.com/ads/",
+      "国内游戏广告与投放资料"
+    ],
+    [
+      "案例入口",
+      "TikTok for Business · Gaming",
+      "https://www.tiktok.com/business/en/industries/gaming",
+      "海外短视频创意与案例入口"
     ],
     [
       "中文视频搜索",
-      "B站搜索：人工智能是怎么发展到今天的？ 深度讲解",
-      "https://search.bilibili.com/all?keyword=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%98%AF%E6%80%8E%E4%B9%88%E5%8F%91%E5%B1%95%E5%88%B0%E4%BB%8A%E5%A4%A9%E7%9A%84%EF%BC%9F%20%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3",
+      "B站搜索：国内外手机游戏如何做品宣？ 深度讲解",
+      "https://search.bilibili.com/all?keyword=%E5%9B%BD%E5%86%85%E5%A4%96%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F%E5%A6%82%E4%BD%95%E5%81%9A%E5%93%81%E5%AE%A3%EF%BC%9F%20%E6%B7%B1%E5%BA%A6%E8%AE%B2%E8%A7%A3",
       "优先筛选 20 分钟以上、大学课程、纪录片或专业机构账号。"
     ],
     [
       "中文视频搜索",
-      "B站搜索：人工智能是怎么发展到今天的？ 历史 发展",
-      "https://search.bilibili.com/all?keyword=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%98%AF%E6%80%8E%E4%B9%88%E5%8F%91%E5%B1%95%E5%88%B0%E4%BB%8A%E5%A4%A9%E7%9A%84%EF%BC%9F%20%E5%8E%86%E5%8F%B2%20%E5%8F%91%E5%B1%95",
+      "B站搜索：国内外手机游戏如何做品宣？ 历史 发展",
+      "https://search.bilibili.com/all?keyword=%E5%9B%BD%E5%86%85%E5%A4%96%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F%E5%A6%82%E4%BD%95%E5%81%9A%E5%93%81%E5%AE%A3%EF%BC%9F%20%E5%8E%86%E5%8F%B2%20%E5%8F%91%E5%B1%95",
       "适合补充时间线和关键转折。"
     ],
     [
       "中文播客搜索",
-      "小宇宙搜索：人工智能是怎么发展到今天的？",
-      "https://www.xiaoyuzhoufm.com/search?keyword=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%98%AF%E6%80%8E%E4%B9%88%E5%8F%91%E5%B1%95%E5%88%B0%E4%BB%8A%E5%A4%A9%E7%9A%84%EF%BC%9F",
+      "小宇宙搜索：国内外手机游戏如何做品宣？",
+      "https://www.xiaoyuzhoufm.com/search?keyword=%E5%9B%BD%E5%86%85%E5%A4%96%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F%E5%A6%82%E4%BD%95%E5%81%9A%E5%93%81%E5%AE%A3%EF%BC%9F",
       "如果找不到具体单集，按主题和节目名称筛选 30 分钟以上内容。"
     ],
     [
       "数据入口",
-      "百度搜索：人工智能是怎么发展到今天的？ 数据 图表",
-      "https://www.baidu.com/s?wd=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%98%AF%E6%80%8E%E4%B9%88%E5%8F%91%E5%B1%95%E5%88%B0%E4%BB%8A%E5%A4%A9%E7%9A%84%EF%BC%9F%20%E6%95%B0%E6%8D%AE%20%E5%9B%BE%E8%A1%A8",
+      "百度搜索：国内外手机游戏如何做品宣？ 数据 图表",
+      "https://www.baidu.com/s?wd=%E5%9B%BD%E5%86%85%E5%A4%96%E6%89%8B%E6%9C%BA%E6%B8%B8%E6%88%8F%E5%A6%82%E4%BD%95%E5%81%9A%E5%93%81%E5%AE%A3%EF%BC%9F%20%E6%95%B0%E6%8D%AE%20%E5%9B%BE%E8%A1%A8",
       "优先使用政府、大学、研究机构或上市公司年报数据。"
     ]
   ],
   "sections": [
     {
-      "heading": "先别问机器会不会思考：Transformer要解决的是训练速度",
+      "heading": "四个案例的数字很漂亮，但先看清它们各自在测什么",
       "paragraphs": [
-        "Alammar在文章开头把Transformer放在“注意力”这条线上：上一篇讲的是Attention，一种在现代深度学习模型中无处不在的方法，它帮助改进了神经机器翻译应用；这一篇讲Transformer，一个用注意力来提升训练速度的模型[来源：The Illustrated Transformer]。注意这里的因果顺序：注意力先被用于改进翻译质量，Transformer再用注意力解决速度问题。这不是哲学突破，而是工程优化。文章没有讨论“机器能否理解语言”，它讨论的是“怎么让模型训练得更快”。\n\n文章原话是“The biggest benefit, however, comes from how The Transformer lends itself to parallelization”——最大的好处来自Transformer适合并行化[来源：The Illustrated Transformer]。为什么并行化是最大好处？因为训练大模型的时间成本直接取决于计算能不能同时做。Alammar拆解了编码器结构：每个编码器有两个子层，先过自注意力层，再过前馈神经网络；自注意力层里各词的路径有依赖关系，但前馈层没有这些依赖，所以各路径可以在前馈层并行执行[来源：The Illustrated Transformer]。换句话说，Transformer把“必须串行”的部分压缩在注意力层，把“可以并行”的部分留给前馈层。\n\n这个设计选择有具体后果。文章说Transformer在特定任务上超越了Google Neural Machine Translation模型，而且Google Cloud推荐把Transformer作为使用其Cloud TPU的参考模型[来源：The Illustrated Transformer]。这两句话放在一起看：一个模型架构如果能匹配专用硬件（TPU）的并行计算模式，它就不只是学术论文，而会成为云服务的基础设施选项。AI发展到今天的一个关键机制，正是模型架构和芯片/云平台之间的这种相互适配。\n\n这里还要注意一个限定词：“特定任务”。文章没有说Transformer在所有翻译任务上都超越GNMT，也没有给出BLEU分数或其他量化指标。所以本文只能停在“特定任务上超越”这个表述，不能补充具体数字。这个限定很重要，因为读者常把“在某个基准上更好”误读为“全面取代旧方法”。"
-      ]
+        "TikTok for Business 游戏页把四个案例并排放在“Gaming marketing success stories”里，每个案例都标了投放工具和结果。第一个是 Ubisoft HOMA 发行的《Clean It!》，使用 TikTok Creative Challenge、App Event Optimization 和 Value-Based Optimization，结果是 250 万安装、CPI 降低 55%、CVR 提高 60%[来源：Marketing For Gaming | TikTok For Business]。第二个是 SciPlay 旗下 Game District 的《My Supermarket Simulator》，使用 TikTok 的 NTL 项目和 TikTok One 里的创意方案，结果是在 Android 登顶、CVR 10.84%、D7 ROAS 提高 30%[来源：Marketing For Gaming | TikTok For Business]。第三个是 AppQuantum 为 Whatwapp 的 Scopa 游戏做推广，使用 Smart+，结果是在 Android 上 Day 1 留存提高 16%、转化率提高 15%、CPI 降低 14%[来源：Marketing For Gaming | TikTok For Business]。第四个是 Pixelvoid Games 的《Skins Clothes Maker》，使用 TikTok LiveOps 项目，结果是全球规模增长 800%、每日收入留存提高 4 倍[来源：Marketing For Gaming | TikTok For Business]。",
+        "这四个案例值得逐条看口径。CPI 是每次安装成本，CVR 是转化率，D7 ROAS 是第 7 日的广告支出回报，Day 1 retention 是次日留存。案例给出的都是相对变化或平台内排名，不是绝对金额，也没有一个案例披露“投了多少钱”“素材做了多少条”“测试了多少组”。250 万安装是绝对量，但它是安装量，不是预算；10.84% 的 CVR 是比率，不是花费；800% 的全球规模增长是相对倍数，基数没有给。读者可以把这些数字理解为“平台方挑选出来展示的相对改善”，不能把它们换算成任何单款游戏的品宣预算。",
+        "还有一个细节：四个案例分别落在超休闲/清洁模拟、超市模拟经营、卡牌、换装四个品类，工具组合也各不相同——Creative Challenge 偏创意供给，App Event Optimization 和 Value-Based Optimization 偏投放优化，NTL 和 TikTok One 偏创意与达人/内容方案，Smart+ 偏自动化投放，LiveOps 偏长线运营。这说明 TikTok 在游戏页上展示的不是单一“买量产品”，而是一条从素材到投放再到运营的工具链。资料没有解释 NTL 的全称和计费方式，也没有给 Smart+ 或 LiveOps 的报价，所以只能确认这些产品存在、被用于这些案例，不能确认它们的单价。"
+      ],
+      "heading_note": ""
     },
     {
-      "heading": "六层和512维：Transformer的构造没有魔法数字",
+      "heading": "创意测试三倍增长：被单独拎出来的预算科目",
       "paragraphs": [
-        "Alammar用“打开黑箱”的方式介绍Transformer：在机器翻译应用里，它输入一种语言的句子，输出另一种语言的翻译；打开后看到编码器组件、解码器组件以及它们之间的连接[来源：The Illustrated Transformer]。编码器是6个编码器堆叠而成，解码器也是6个；文章特意说“6这个数字没什么神奇，完全可以实验其他安排”[来源：The Illustrated Transformer]。这句话很重要：它说明Transformer的层数是一个可调的超参数，不是理论推导出的唯一解。\n\n每个词先通过嵌入算法变成向量，向量大小是512维；嵌入只发生在最底层编码器，其他编码器接收的是下方编码器的输出，但所有编码器共同的一点是接收一串512维向量；这串向量的长度也是超参数，基本上等于训练数据集中最长句子的长度[来源：The Illustrated Transformer]。这些数字——6层、512维——是理解Transformer工程属性的抓手：它们是可以被替换、被扩展的设计参数。今天的大模型动辄几十层、几千维，但原始论文的起点就是这些可调整的数字。\n\n编码器的两个子层分工明确：自注意力层帮助编码器在编码某个词时查看输入句子中的其他词；自注意力层的输出送入前馈神经网络，同一个前馈网络独立应用于每个位置[来源：The Illustrated Transformer]。解码器除了这两层，中间还多一个注意力层，帮助解码器关注输入句子的相关部分[来源：The Illustrated Transformer]。这个结构决定了信息如何流动，也决定了哪些计算可以并行。\n\n把这些部件放在一起看，Transformer并不神秘：它是一组有明确依赖关系的矩阵运算，重复六次，再加上解码器的额外注意力层。文章没有声称这个结构模仿了人脑，也没有说它具备“理解”能力。它更像一个被精心设计的计算图，目标是让训练更快、更容易扩展。"
-      ]
+        "Sensor Tower 那篇《State of Game Advertising 2026: Three Trends to Know》的摘要只给了三句话，但信息密度不低：游戏广告在 2026 年更繁忙；Sensor Tower 的数据拆解了“移动广告创意测试的三倍增长”；Nintendo 和 PlayStation 在主机媒体中占主导；顶级跨平台系列把移动和主机当作完全独立的 campaign[来源：Sensor Tower - Blog，State of Game Advertising 2026 摘要]。这里最容易被忽略的是“创意测试”被单独列为趋势，而不是笼统地说“广告支出增长”。",
+        "如果把“创意测试”当成一个预算科目，它至少包含几件事：素材的拍摄与制作、多版本剪辑、不同钩子的 A/B 测试、达人内容的再剪、直播切片、投放过程中的持续替换。TikTok 页面上的 Creative Challenge、TikTok One、Symphony Creative Studio、Creative Exchange 这些产品名，对应的正是这条链上的不同环节[来源：Marketing For Gaming | TikTok For Business]。但资料只给了产品名和“三倍增长”这个方向，没有给任何单款游戏的创意制作费、测试条数、测试周期或测试预算占比。所以能说的是：创意测试从“投放前的一道工序”变成了“投放中持续发生的动作”，这会改变预算在制作和媒介之间的切分；不能说的是：它具体占了多少百分比。",
+        "这里还要区分“三倍”可能指什么。Sensor Tower 的摘要用的是“tripling of mobile ad creative testing”，没有说明是三倍素材数量、三倍测试频次还是三倍相关花费。作者分析：如果三倍指的是测试频次，那么预算增量可能主要落在制作端；如果指的是测试花费，那么媒介端也会被带动。资料不足以判断是哪一种，任何“创意测试占预算三成”之类的说法都没有依据。"
+      ],
+      "heading_note": ""
     },
     {
-      "heading": "自注意力：让每个词看其他词，但把依赖限制在一层",
+      "heading": "移动和主机拆成两个 campaign，平台产品结构在推着人这么做",
       "paragraphs": [
-        "Alammar承认“自注意力”这个词容易让人以为大家都该懂，但他本人在读《Attention is All You Need》之前从没遇到过这个概念[来源：The Illustrated Transformer]。这个坦白有调查价值：它说明Transformer的核心机制在论文发表时并不是常识，而是需要被解释的新东西。文章用“The animal didn't cross the street because...”这类句子做例子，演示自注意力如何让模型在处理一个词时参考句子里的其他词[来源：The Illustrated Transformer]。\n\n从计算角度看，自注意力层里各词的路径有依赖关系，而前馈层没有这些依赖，所以前馈层可以并行[来源：The Illustrated Transformer]。这个区分是理解Transformer效率的关键：不是所有计算都并行，而是把依赖关系集中到自注意力层，让占比较大的前馈计算可以并行。文章没有给出“并行后快了多少倍”的具体数字，所以本文也不能编造一个加速比。\n\n编码器处理输入的方式是：接收向量列表，先过自注意力层，再过一个前馈神经网络，然后把输出向上送到下一个编码器；每个位置的词都走自己的路径，在前馈层这些路径可以并行执行[来源：The Illustrated Transformer]。这个流程重复6次，就形成了编码器的堆叠。解码器同理，但多一个注意力层。把这些步骤拆开看，Transformer并不神秘，它是一组有明确依赖关系的矩阵运算。\n\n自注意力层的存在也解释了为什么Transformer能处理长句子里的指代关系。传统序列模型需要按顺序处理词，前面的信息传到后面要经过很多步；自注意力让每个词直接“看”句子里的其他词，路径更短。但文章没有展开比较RNN或LSTM的具体机制，所以本文不能替它补一段“Transformer vs RNN”的技术对比。"
-      ]
+        "Sensor Tower 摘要里另一句值得展开的是：顶级跨平台系列把移动和主机当作“entirely separate campaigns”[来源：Sensor Tower - Blog，State of Game Advertising 2026 摘要]。这句话本身没有给案例名，也没有给预算比例，但它和 Google Ads 的产品结构能对上。Google Ads 帮助中心的 App campaign 目录页列出了几类入口：App campaigns for installs、App campaigns for pre-registration、open testing in App campaigns、audience signals in App campaigns for installs、high engagement formats[来源：Get started with app install ads - Google Ads Help]。这些产品名对应的是产品生命周期的不同阶段：预注册、开放测试、安装、互动。",
+        "把这两条信息放在一起，可以做一个有边界的推断：海外投放的平台产品结构本身就在引导广告主按阶段拆 campaign，而不是一套素材、一个目标从头投到尾。预注册阶段的目标是预约，开放测试阶段的目标是测试用户，安装阶段的目标是安装量，互动阶段的目标是 engagement。每个阶段的素材、受众信号和出价方式都不同。Sensor Tower 说跨平台系列把移动和主机分开，Google Ads 说 App campaign 有预注册和开放测试的独立入口，两者指向同一个方向：平台定制和阶段定制，而不是“全球一套素材通投”。",
+        "但这里必须停住。资料没有给出任何一个跨平台系列的具体 campaign 结构、各阶段预算比例、移动端和主机端的素材差异，也没有给出预注册到安装的转化率。Google Ads 的页面只是产品目录，没有案例数字。所以“平台产品结构在推着广告主分阶段投放”是作者分析，不是资料证明的因果。国内侧同样不能对比：腾讯广告游戏行业入口只有 URL，没有抓到正文，无法确认国内平台的产品结构是否也按预注册、开放测试、安装这样分。"
+      ],
+      "heading_note": ""
     },
     {
-      "heading": "从论文到TPU参考模型：实现生态比论文本身更能说明扩散速度",
+      "heading": "从看到到付费：平台自报数据能证明的和不能证明的",
       "paragraphs": [
-        "Transformer由论文《Attention is All You Need》提出；它的TensorFlow实现可以在Tensor2Tensor包中找到；哈佛NLP小组制作了带PyTorch实现的论文注释指南[来源：The Illustrated Transformer]。这三个事实放在一起，说明论文发表后很快出现了多种框架的实现和教学注释。一个模型架构能不能扩散，不只取决于论文写得好不好，还取决于有没有人把它翻译成可运行的代码。\n\n更值得注意的是Google Cloud的态度：文章说Google Cloud推荐使用Transformer作为参考模型来使用其Cloud TPU[来源：The Illustrated Transformer]。这句话把模型架构和商业云服务绑在一起。TPU是专用硬件，云厂商推荐某个模型作为参考，意味着这个模型的计算模式与硬件设计相匹配。读者可以从中理解AI发展的一种动力：芯片厂商和云平台需要“杀手级模型”来证明硬件有用，而模型研究者需要硬件来训练更大的模型。\n\n哈佛NLP小组的注释指南也值得单独看。它不是官方文档，而是学术机构为论文做的逐段解释，还附带PyTorch实现[来源：The Illustrated Transformer]。这说明Transformer的传播不只靠Google一家公司，还靠外部研究者的教学劳动。一个架构要成为公共知识，需要有人把它拆开、注释、跑通，再放到网上。\n\n文章还提到Transformer在特定任务上超越了Google Neural Machine Translation模型[来源：The Illustrated Transformer]。这个比较有具体范围——“特定任务”，不是全面超越。文章没有给出BLEU分数或其他量化指标，所以本文只能停在“特定任务上超越”这个表述，不能补充具体数字。对读者来说，这提醒我们：看到“超越”这个词时，要先问“在什么任务上、用什么指标、和哪个版本比”。"
-      ]
+        "TikTok 游戏页给了一组受众数据：2022 年，TikTok 日活用户中有 50% 看过游戏相关内容，累计超过 3 万亿次浏览；82% 的 TikTok 游戏玩家每周都玩游戏；看到游戏内容后，41% 下载了游戏、36% 付费游玩[来源：Marketing For Gaming | TikTok For Business]。页面标了来源：前两条分别来自 TikTok Internal Data（全球，2022 年 1 月至 12 月）和 TikTok Marketing Science Journey of Launch Research 2023（由 Material 执行）；后一条来自 Marketing Science, Global Entertainment Study (Gaming Vertical) 2021（由 Material 为 TikTok 执行）[来源：Marketing For Gaming | TikTok For Business]。",
+        "这组数字的用法要小心。50% 和 3 万亿次是平台内部数据，说明 TikTok 上有大量游戏内容消费；82% 是平台委托调研，说明抽样到的 TikTok 游戏玩家群体活跃度高；41% 和 36% 是“看到游戏内容后”的自报行为，不是对照实验，也不是归因窗口内的转化。它不能回答“品宣投入一元带来多少下载或付费”，只能回答“在这个平台上，游戏内容有受众，且受众自报会采取行动”。资料没有给样本量、抽样方法、地区分布和误差范围，所以这组数字适合做平台价值的佐证，不适合做预算分配的测算依据。",
+        "对比案例里的 D7 ROAS 和 CVR，会发现另一层问题：D7 ROAS 是投放侧指标，依赖归因窗口和归因方式；CVR 是转化率，依赖转化事件的定义。TikTok 页面没有给这些案例的归因窗口、转化事件口径和统计周期。所以即使案例数字是平台后台跑出来的，读者也无法复算。这不是说数字假的，而是说它属于“平台自报的案例结果”，不是“可审计的第三方归因”。资料里也没有任何品牌知名度、考虑度、搜索指数、自然下载占比的数据。换言之，“品宣”里的“品”这一半，本次资料无法量化。"
+      ],
+      "heading_note": ""
     },
     {
-      "heading": "图解、翻译和课程：一个技术概念如何变成公共知识",
+      "heading": "收入榜与 LiveOps：结果可见，归因不可见",
       "paragraphs": [
-        "Alammar的文章本身成了传播节点。文章页面显示它被斯坦福、哈佛、MIT、普林斯顿、CMU等课程使用；有阿拉伯语、简体中文（两个版本）、法语（两个版本）、意大利语、日语、韩语、波斯语、俄语、西班牙语（两个版本）、越南语等翻译；被MIT的深度学习State of the Art讲座引用；在Hacker News有65分和4条评论，在Reddit的r/MachineLearning有29分和3条评论[来源：The Illustrated Transformer]。这些数字不大，但它们记录了一个技术解释文本的实际传播轨迹。\n\n这篇文章后来变成了书：LLM-book.com，其中第三章是本文的更新扩展版，讨论原始Transformer之后七年的最新模型演变，比如Multi-Query Attention和RoPE位置嵌入[来源：The Illustrated Transformer]。2025年更新还提到，作者团队建了一个免费短期课程，用动画把文章内容更新到最新[来源：The Illustrated Transformer]。从博客文章到书再到课程，这条路径说明AI知识的扩散不只靠论文，还靠可理解的图解、翻译和课程。\n\n对普通读者来说，这个细节有实际意义：你今天能看到的“Transformer讲解”，很多都共享同一个源头。Alammar的文章被多所大学课程采用，意味着下一代工程师可能是通过这类图解而不是原始论文来理解Transformer的。技术传播的形态会影响技术被理解的方式。\n\n但这里也有一个容易被忽略的问题：图解为了易懂，会简化数学细节。Alammar自己就说这篇文章试图“oversimplify things a bit”，把概念一个一个介绍给没有深入背景的读者[来源：The Illustrated Transformer]。简化不是错误，但读者要知道自己看的是一张地图，不是领土本身。真正的论文还有位置编码、残差连接、层归一化等细节，这些在抓取到的文章摘要中没有展开。"
-      ]
+        "Sensor Tower 博客首页还有一条榜单摘要：2026 年 9 月，Honor of Kings 保持全球最高收入手游的位置，ROBLOX、Gossip Harbor、Candy Crush Saga 和 MONOPOLY GO! 进入全球前五[来源：Sensor Tower - Blog，Top 10 Worldwide Mobile Games 摘要]。这条信息能说明的是收入格局：熟 IP、熟品类和长线运营的产品仍然占住头部。但它不能说明这些游戏靠什么品宣动作拿到收入。资料没有给这些游戏的广告支出、素材策略、联名活动、赛事投入或社区运营细节。把榜单名次直接归因到“品宣做得好”，是资料不支持的一步。",
+        "Pixelvoid 的 LiveOps 案例提供了另一个切面：用 TikTok LiveOps 项目，结果是全球规模增长 800%、每日收入留存提高 4 倍[来源：Marketing For Gaming | TikTok For Business]。LiveOps 是长线运营活动，不是传统意义上的品牌广告，也不是单纯买量。它更接近“用运营动作拉动活跃和收入留存”。这个案例的价值在于提示：手游品宣的边界正在和长线运营重叠，活动、内容、投放可能在同一段时间里发生。但资料没有给 LiveOps 的预算、活动周期、参与人数和收入绝对值，所以只能确认“有这个案例、有这组相对结果”，不能确认“LiveOps 是品宣预算里的一个大科目”。",
+        "作者分析：收入榜和案例都只展示结果，不展示归因。要把“品宣动作”和“收入/留存”连起来，需要广告主披露、第三方归因或对照实验，本次资料三者都没有。读者看到“某游戏登顶”或“某案例增长 800%”时，合理的理解是“这是结果侧的证据”，不是“这是品宣方法的证据”。"
+      ],
+      "heading_note": ""
     },
     {
-      "heading": "七年之后：原始Transformer只是一个起点",
+      "heading": "国内侧只有入口没有正文，这不是国内没有做法",
       "paragraphs": [
-        "2025年更新明确说，书里的第三章讨论的是“原始Transformer之后七年”模型如何演变，举的例子是Multi-Query Attention和RoPE位置嵌入[来源：The Illustrated Transformer]。这说明今天被称为“Transformer”的东西，已经不等于2017年论文里的那个6层、512维的原始版本。架构在被持续修改。\n\n但资料没有给出这些修改的具体效果数字。文章没有说Multi-Query Attention让推理快了多少，也没有说RoPE解决了什么具体问题、提升了多少准确率。所以本文不能写“性能提升X倍”之类的结论。能确认的只是：这些组件是七年演变的一部分，并且被Alammar的更新版文章和书纳入讨论[来源：The Illustrated Transformer]。\n\n这个限制本身值得说明。读者常看到“Transformer改变了一切”的说法，但改变不是一次性完成的。原始论文提出的是一个可扩展的骨架；后续的Multi-Query Attention、RoPE等修改是在这个骨架上做工程调整。资料支持“骨架被提出并被持续修改”这个判断，但不支持“某次修改带来了某个具体倍数提升”的精确断言。\n\n七年这个时间跨度也有信息量。2017年到2025年，足够一个架构从论文变成课程内容，再变成书，再被更新成免费课程。这个周期说明AI领域的技术迭代不只是研究突破，还包括教材、课程和工具链的同步更新。一个模型如果只停留在论文里，很难产生这种扩散；它必须被实现、被教学、被反复解释，才能成为今天的样子。"
-      ]
+        "本文主题是国内外手游如何做品宣，但抓取资料在国内侧几乎是空的。腾讯广告游戏行业入口（https://e.qq.com/ads/）、B站搜索入口、中国音像与数字出版协会的游戏产业报告入口（https://www.gamemarketing.cn/）都只出现在资料清单里，没有抓到正文；Meta 的游戏行业页只返回登录界面[来源：Facebook]。这意味着本文无法写出国内短视频买量、直播、社区运营的具体案例和数字，也无法写出 Meta 体系里的游戏投放做法。",
+        "这个缺口要说清楚，免得读者误读。资料没抓到，不等于国内平台没有公开案例，也不等于国内品宣没有方法。它只说明本次抓取没有拿到可引用的正文。在这种情况下，任何“国内某游戏靠短视频品宣做到多少安装”“某场直播带货多少预约”的写法都会变成编造。所以本文宁可空着，也不补。",
+        "对读者来说，更实用的做法是带着四个问题去读任何一篇手游品宣报道。第一，预算是拆在创意制作、媒介采买、达人/挑战赛、直播运营、联名赛事里的哪一项，还是笼统说“营销费用”。第二，指标是 CPI、CVR、D7 ROAS、Day 1 留存这类投放指标，还是品牌知名度、考虑度、搜索指数这类品牌指标。第三，数据来源是平台自报、广告主披露、第三方归因还是媒体估算。第四，样本是单款游戏、一个品类还是一个平台的整体数据。这四个问题能过滤掉大部分看起来精确、实际上不可复算的数字。"
+      ],
+      "heading_note": ""
     },
     {
-      "heading": "本次资料没有回答的部分：图灵、专家系统、GPU和生成式AI产品化",
+      "heading": "把费用科目摊开：哪些有资料，哪些只能空着",
       "paragraphs": [
-        "主题资料的概述提到：20世纪中叶图灵等人提出机器智能的早期问题；专家系统兴起又受限于规则维护；机器学习让系统从数据中寻找模式；深度学习和GPU推动视觉与语音应用；2017年Transformer改变语言模型路线；近年生成式AI把大规模预训练、强化学习和产品化带入大众视野[来源：主题资料概述]。但这些是概述，不是本次抓取的网页内容。本次唯一抓取的长文是Alammar的Transformer图解，它没有提供图灵测试的原始文献、专家系统的具体案例、GPU的性能数据或生成式AI产品的用户数。\n\n因此，本文不能写“专家系统在20世纪80年代达到了多少亿美元的市场规模”，不能写“GPU使深度学习训练速度提升了多少倍”，不能写“ChatGPT用了多少用户、多少参数、多少训练成本”。这些数字在本次资料中找不到。主题资料的“points”里提到“幻觉、版权、就业与治理”，但同样没有展开具体案例或数据。读者如果看到其他文章给出这些数字，应该先确认其来源和统计口径，而不是直接采信。\n\n关于百度热搜的“中国AI禁令”拟出台，本次抓取的网页资料没有任何对应内容。资料中没有政策文本、没有监管机构名称、没有生效时间、没有适用范围。所以本文不能对这条热搜做事实判断，只能指出：它不在本次证据范围内。读者如果看到其他文章讨论这个话题，应该先确认其信息来源，而不是把热搜词当作已核实的事实。\n\n这种“资料不足就明说”的处理方式，本身就是理解AI发展的一部分。AI领域的信息噪声很大，很多流行说法缺少可追溯的来源。把“有网页证据的事实”和“主题资料里的概括”分开，再和“完全无法核验的热搜”分开，读者才能判断一篇文章到底在说什么。"
-      ]
-    },
-    {
-      "heading": "把AI发展理解为多条路线和工程约束的交织，而不是单线进步史",
-      "paragraphs": [
-        "从本次资料能确认的，是一条具体路线的局部：Transformer用自注意力层和前馈层的组合，把序列模型训练中的并行化问题往前推了一步；它在特定任务上超越了Google Neural Machine Translation；Google Cloud把它作为Cloud TPU的参考模型；TensorFlow和PyTorch都有实现；图解文章被多所大学课程使用并翻译成十几种语言；七年后架构仍在被修改[来源：The Illustrated Transformer]。这些事实足以说明“一个模型架构如何变成基础设施和公共知识”，但不足以说明“AI的全部历史”。\n\n主题资料提醒读者，AI还包括搜索、推荐、视觉识别、自动驾驶和科学计算，不只是聊天机器人[来源：主题资料概述]。这个提醒是对的，但本次抓取没有提供这些领域的网页证据。所以本文的结论必须收窄：如果你想知道“语言模型这条路是怎么走到今天的”，Alammar的文章提供了一个有细节的切片；如果你想知道“AI作为一个整体是怎么发展的”，本次资料不够，需要补充图灵、专家系统、计算机视觉、机器人等领域的可核验来源。\n\n读者可以用三个问题来检验类似文章：第一，它说的“突破”是哲学层面的还是工程层面的？第二，它给出的数字有没有来源和口径？第三，它有没有把“某个模型架构的演进”偷换成“AI的全部历史”？本次资料支持的答案是：Transformer的突破主要在工程效率（并行化）和生态适配（TPU参考模型、多框架实现、课程传播），而不是“机器获得了意识”。这个区分不削弱Transformer的重要性，反而让它的重要性变得可检验。\n\n回到标题提出的问题：人工智能是怎么发展到今天的？本次资料能给出的回答是局部而具体的——至少语言模型这条线上，发展来自一个可并行的架构被提出、被实现、被硬件厂商采纳、被教师写成图解、被翻译成多国语言、被持续修改。这个回答不完整，但它有证据，也有边界。承认边界，比补一张看似完整的时间线更接近调查报道的本意。"
-      ]
+        "按照宣传和营销费用的常见科目逐项对，本次资料的状态是这样的。创意制作与测试：有方向性描述（Sensor Tower 说移动广告创意测试三倍增长）和工具名（Creative Challenge、TikTok One、Symphony Creative Studio、Creative Exchange），没有任何单款游戏的制作费、测试条数或测试预算占比[来源：Sensor Tower - Blog；Marketing For Gaming | TikTok For Business]。媒介采买：有广告位产品名（TopView、Pulse、App campaigns），其中 Pulse 被描述为挨着“前 4% 热门内容”的广告位，但没有刊例价、没有单款花费、没有采买折扣[来源：Marketing For Gaming | TikTok For Business；Get started with app install ads - Google Ads Help]。",
+        "优化工具：有产品名（App Event Optimization、Value-Based Optimization、Smart+），没有费率，也没有说明这些工具是否额外收费[来源：Marketing For Gaming | TikTok For Business]。达人/挑战赛：有 Creative Challenge 这个产品名，没有达人报价、没有挑战赛预算、没有参与人数。直播/运营：有 LiveOps 案例和相对结果，没有预算和周期。联名/赛事：本次资料完全没有涉及，不能写。渠道与效果指标：有 CPI、CVR、D7 ROAS、Day 1 留存的实际用法，但只有相对变化，没有绝对值；有平台委托调研的 41%/36%，但那是自报行为，不是归因回报。",
+        "这张清单的结论很直接：本次资料能支持“手游品宣在用什么工具、按什么指标看结果、平台怎么讲案例”，不能支持“某款游戏品宣花了多少钱、各科目占比多少”。公开披露、行业报告、媒体估算和无法确认的单款数字，在这批资料里只能落到最后一类。读者如果看到有人给出精确到万元的单款品宣预算，而又没有说明来源，应当把它当成未确认信息，而不是本文资料能支撑的事实。"
+      ],
+      "heading_note": ""
     }
   ],
   "key_takeaways": [
-    "Transformer的最大卖点是并行化，不是“更聪明”：文章明确说最大好处来自它适合并行化，前馈层各路径无依赖可并行执行。",
-    "六层堆叠和512维向量是可调的超参数，不是魔法数字；文章说6这个数字可以实验其他安排，向量长度取决于训练数据中最长句子。",
-    "Google Cloud把Transformer作为Cloud TPU参考模型，说明模型架构与专用硬件的适配是AI发展的重要动力。",
-    "一篇图解文章被斯坦福、哈佛、MIT、普林斯顿、CMU等课程使用，并有十几种语言翻译，说明技术传播本身是AI扩散的一部分。",
-    "2025年更新显示原始Transformer之后七年仍在演化（Multi-Query Attention、RoPE），但资料没有给出这些修改的具体性能数字。",
-    "本次资料不足以支撑完整AI通史：图灵、专家系统、GPU、生成式AI产品化和“中国AI禁令”热搜均无可核验网页细节，不能编造数字。"
+    "本次可验证的手游品宣机制，核心是“创意供给—素材测试—投放优化—运营动作”的组合；TikTok 的四个案例都按这个结构呈现，而不是单一品牌广告。",
+    "Sensor Tower 摘要提到 2026 年移动广告创意测试三倍增长，并称顶级跨平台系列把移动和主机当作完全独立的 campaign；这与 Google Ads 按预注册、开放测试、安装、互动分阶段的产品结构方向一致，但资料没有给预算比例。",
+    "所有案例数字都是平台自报的相对变化或平台内排名：CPI -55%、CVR +60%、D7 ROAS +30%、Day 1 留存 +16%、CPI -14%、全球规模 +800%。没有任何单款游戏的绝对金额，不能换算成预算。",
+    "TikTok 的 50%、82%、41%、36% 分别来自平台内部数据和平台委托 Material 的调研，是内容消费与自报行为数据，不是归因回报，不能当作品宣 ROI。",
+    "国内侧（腾讯广告、B站、中国音数协）和 Meta 在本次抓取中只有入口或登录页，没有正文；因此本文没有写国内具体做法和金额，这是资料缺口，不是国内没有做法。",
+    "评估任何手游品宣说法时，先问四个问题：预算拆在哪个科目、指标是投放还是品牌、数据是平台自报还是第三方归因、样本是单款还是品类。"
   ],
   "sources_used": [
-    "https://jalammar.github.io/illustrated-transformer/"
+    "https://sensortower.com/blog",
+    "https://www.tiktok.com/business/en/industries/gaming",
+    "https://support.google.com/google-ads/topic/10011588"
   ],
   "audio": {
     "status": "generated",
-    "url": "audio/2026-10-21.mp3",
-    "characters": 7589,
-    "chunks": 57,
+    "url": "audio/2026-10-22.mp3",
+    "characters": 7417,
+    "chunks": 55,
     "voice_type": 1001
   }
 }
